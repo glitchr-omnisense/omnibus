@@ -1,0 +1,25 @@
+<?php
+
+namespace Omnibus\Core\Tests;
+
+use Omnibus\Core\Model\Address;
+use Omnibus\Core\Model\Parcel;
+use Omnibus\Core\Model\Shipment;
+
+final class Fixtures
+{
+    public static function shop(): Address
+    {
+        return new Address('Example Shop', ['12 rue de la Paix'], '75002', 'Paris', 'FR', 'Shop', 'shop@example.org', '+33102030405');
+    }
+
+    public static function customer(string $country = 'FR'): Address
+    {
+        return new Address('Émile Zola', ['21 bis rue de Bruxelles', 'Bâtiment B'], '75009', 'Paris', $country, null, 'emile@example.org', '06 12 34 56 78');
+    }
+
+    public static function shipment(int ...$grams): Shipment
+    {
+        return new Shipment(self::shop(), self::customer(), array_map(static fn (int $g) => new Parcel($g), $grams ?: [800]), reference: 'CMD-1042');
+    }
+}
