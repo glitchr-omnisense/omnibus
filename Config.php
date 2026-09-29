@@ -1,8 +1,8 @@
 <?php
 
-namespace Omnibus\Core;
+namespace Omnibus;
 
-use Omnibus\Core\Exception\InvalidConfigException;
+use Omnibus\Exception\InvalidConfigException;
 
 /**
  * A gateway's configuration while its factory builds it: the options given,

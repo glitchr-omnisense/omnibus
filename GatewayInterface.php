@@ -1,15 +1,15 @@
 <?php
 
-namespace Omnibus\Core;
+namespace Omnibus;
 
-use Omnibus\Core\Model\Address;
-use Omnibus\Core\Model\Label;
-use Omnibus\Core\Model\Parcel;
-use Omnibus\Core\Model\PickupPoint;
-use Omnibus\Core\Model\Rate;
-use Omnibus\Core\Model\Shipment;
-use Omnibus\Core\Model\Tracking;
-use Omnibus\Core\Request\Request;
+use Omnibus\Model\Address;
+use Omnibus\Model\Label;
+use Omnibus\Model\Parcel;
+use Omnibus\Model\PickupPoint;
+use Omnibus\Model\Rate;
+use Omnibus\Model\Shipment;
+use Omnibus\Model\Tracking;
+use Omnibus\Request\Request;
 
 /**
  * One carrier, configured: the same questions for all of them. Each typed

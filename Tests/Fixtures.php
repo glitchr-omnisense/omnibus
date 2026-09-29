@@ -1,10 +1,10 @@
 <?php
 
-namespace Omnibus\Core\Tests;
+namespace Omnibus\Tests;
 
-use Omnibus\Core\Model\Address;
-use Omnibus\Core\Model\Parcel;
-use Omnibus\Core\Model\Shipment;
+use Omnibus\Model\Address;
+use Omnibus\Model\Parcel;
+use Omnibus\Model\Shipment;
 
 final class Fixtures
 {

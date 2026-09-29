@@ -1,23 +1,53 @@
 {
-    "name": "omnibus/core",
+    "name": "glitchr/omnibus",
     "type": "library",
-    "description": "Omnibus: one contract for parcel carriers - rates, labels, tracking, pickup points (the Payum of shipping).",
-    "keywords": ["shipping", "carrier", "parcel", "label", "tracking", "pickup point"],
+    "description": "Omnibus: one contract for parcel carriers - rates, labels, tracking, pickup points - and its Symfony bundle (the Payum of shipping).",
+    "keywords": [
+        "shipping",
+        "carrier",
+        "parcel",
+        "label",
+        "tracking",
+        "pickup point"
+    ],
     "license": "LGPL-3.0-or-later",
-    "authors": [{"name": "Marco Meyer", "email": "marco.meyer@glitchr.io"}],
+    "authors": [
+        {
+            "name": "Marco Meyer",
+            "email": "marco.meyer@glitchr.io"
+        }
+    ],
     "require": {
         "php": ">=8.2",
         "symfony/http-client-contracts": "^3.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.0",
-        "symfony/http-client": "^6.4|^7.0|^8.0"
+        "symfony/config": "^6.4|^7.0|^8.0",
+        "symfony/dependency-injection": "^6.4|^7.0|^8.0",
+        "symfony/http-client": "^6.4|^7.0|^8.0",
+        "symfony/http-kernel": "^6.4|^7.0|^8.0"
     },
     "suggest": {
         "symfony/http-client": "The HTTP client the carriers talk through",
-        "omnibus/omnibus-bundle": "Symfony integration: gateways from configuration, autowired by name"
+        "omnibus/offline": "Delivery without a carrier: collected, delivered by hand, a flat rate",
+        "omnibus/mondial-relay": "Mondial Relay: relay points, labels, tracking",
+        "omnibus/colissimo": "Colissimo (La Poste)"
     },
-    "autoload": {"psr-4": {"Omnibus\\Core\\": ""}, "exclude-from-classmap": ["/Tests/"]},
-    "autoload-dev": {"psr-4": {"Omnibus\\Core\\Tests\\": "Tests/"}},
-    "config": {"sort-packages": true}
+    "autoload": {
+        "psr-4": {
+            "Omnibus\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Omnibus\\Tests\\": "Tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
 }

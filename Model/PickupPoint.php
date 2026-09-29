@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnibus\Core\Model;
+namespace Omnibus\Model;
 
 /** A relay, locker or post office a parcel can be sent to and collected from. */
 final readonly class PickupPoint

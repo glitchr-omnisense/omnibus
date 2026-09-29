@@ -1,8 +1,8 @@
 <?php
 
-namespace Omnibus\Core\Exception;
+namespace Omnibus\Exception;
 
-use Omnibus\Core\Request\Request;
+use Omnibus\Request\Request;
 
 /** The carrier does not do that (no pickup points, no cancellation...). */
 final class RequestNotSupportedException extends \LogicException implements OmnibusException

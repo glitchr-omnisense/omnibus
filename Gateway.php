@@ -1,16 +1,16 @@
 <?php
 
-namespace Omnibus\Core;
+namespace Omnibus;
 
-use Omnibus\Core\Action\ActionInterface;
-use Omnibus\Core\Exception\CarrierException;
-use Omnibus\Core\Exception\RequestNotSupportedException;
-use Omnibus\Core\Model\Address;
-use Omnibus\Core\Model\Label;
-use Omnibus\Core\Model\Parcel;
-use Omnibus\Core\Model\Shipment;
-use Omnibus\Core\Model\Tracking as TrackingModel;
-use Omnibus\Core\Request;
+use Omnibus\Action\ActionInterface;
+use Omnibus\Exception\CarrierException;
+use Omnibus\Exception\RequestNotSupportedException;
+use Omnibus\Model\Address;
+use Omnibus\Model\Label;
+use Omnibus\Model\Parcel;
+use Omnibus\Model\Shipment;
+use Omnibus\Model\Tracking as TrackingModel;
+use Omnibus\Request;
 
 /** A carrier's actions behind one door: the first action supporting a request answers it. */
 final class Gateway implements GatewayInterface

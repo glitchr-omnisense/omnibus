@@ -1,10 +1,10 @@
 <?php
 
-namespace Omnibus\Core;
+namespace Omnibus;
 
-use Omnibus\Core\Action\ActionInterface;
-use Omnibus\Core\Action\ApiAwareInterface;
-use Omnibus\Core\Action\ConfiguredRatingAction;
+use Omnibus\Action\ActionInterface;
+use Omnibus\Action\ApiAwareInterface;
+use Omnibus\Action\ConfiguredRatingAction;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**

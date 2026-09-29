@@ -1,8 +1,8 @@
 <?php
 
-namespace Omnibus\Core\Action;
+namespace Omnibus\Action;
 
-use Omnibus\Core\Exception\InvalidConfigException;
+use Omnibus\Exception\InvalidConfigException;
 
 /**
  * @template T of object

@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnibus\Core\Model;
+namespace Omnibus\Model;
 
 /**
  * What goes where: from the sender to the recipient - at home, or at a

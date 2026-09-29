@@ -1,9 +1,9 @@
 <?php
 
-namespace Omnibus\Core\Request;
+namespace Omnibus\Request;
 
-use Omnibus\Core\Model\Rate;
-use Omnibus\Core\Model\Shipment;
+use Omnibus\Model\Rate;
+use Omnibus\Model\Shipment;
 
 /** The services that can carry a shipment, and their price. Result: Rate[] */
 final class Rating extends Request

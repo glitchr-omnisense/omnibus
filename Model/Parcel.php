@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnibus\Core\Model;
+namespace Omnibus\Model;
 
 /** One box: its weight (grams), its size (centimetres), what it is worth (minor units). */
 final readonly class Parcel

@@ -1,10 +1,10 @@
 <?php
 
-namespace Omnibus\Core\Action;
+namespace Omnibus\Action;
 
-use Omnibus\Core\Model\Rate;
-use Omnibus\Core\Request\Rating;
-use Omnibus\Core\Request\Request;
+use Omnibus\Model\Rate;
+use Omnibus\Request\Rating;
+use Omnibus\Request\Request;
 
 /**
  * Prices from the gateway's configuration, for carriers that publish no

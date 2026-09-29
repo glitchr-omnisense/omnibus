@@ -1,8 +1,8 @@
 <?php
 
-namespace Omnibus\Core;
+namespace Omnibus;
 
-use Omnibus\Core\Exception\InvalidConfigException;
+use Omnibus\Exception\InvalidConfigException;
 
 /**
  * The shop's carriers by name, each built once from its factory and

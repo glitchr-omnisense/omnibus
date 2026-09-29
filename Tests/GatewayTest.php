@@ -1,18 +1,18 @@
 <?php
 
-namespace Omnibus\Core\Tests;
+namespace Omnibus\Tests;
 
-use Omnibus\Core\Action\ActionInterface;
-use Omnibus\Core\Config;
-use Omnibus\Core\Exception\InvalidConfigException;
-use Omnibus\Core\Exception\RequestNotSupportedException;
-use Omnibus\Core\GatewayFactory;
-use Omnibus\Core\Model\Label;
-use Omnibus\Core\Registry;
-use Omnibus\Core\Request\Cancel;
-use Omnibus\Core\Request\Rating;
-use Omnibus\Core\Request\Request;
-use Omnibus\Core\Request\Shipping;
+use Omnibus\Action\ActionInterface;
+use Omnibus\Config;
+use Omnibus\Exception\InvalidConfigException;
+use Omnibus\Exception\RequestNotSupportedException;
+use Omnibus\GatewayFactory;
+use Omnibus\Model\Label;
+use Omnibus\Registry;
+use Omnibus\Request\Cancel;
+use Omnibus\Request\Rating;
+use Omnibus\Request\Request;
+use Omnibus\Request\Shipping;
 use PHPUnit\Framework\TestCase;
 
 final class GatewayTest extends TestCase

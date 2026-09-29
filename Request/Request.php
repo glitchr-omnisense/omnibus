@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnibus\Core\Request;
+namespace Omnibus\Request;
 
 /**
  * A question put to a gateway. The action that supports it answers by

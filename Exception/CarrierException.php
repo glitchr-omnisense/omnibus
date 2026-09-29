@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnibus\Core\Exception;
+namespace Omnibus\Exception;
 
 /** The carrier refused, or could not be reached. */
 class CarrierException extends \RuntimeException implements OmnibusException

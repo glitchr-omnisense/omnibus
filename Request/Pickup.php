@@ -1,10 +1,10 @@
 <?php
 
-namespace Omnibus\Core\Request;
+namespace Omnibus\Request;
 
-use Omnibus\Core\Model\Address;
-use Omnibus\Core\Model\Parcel;
-use Omnibus\Core\Model\PickupPoint;
+use Omnibus\Model\Address;
+use Omnibus\Model\Parcel;
+use Omnibus\Model\PickupPoint;
 
 /** The pickup points near an address (that can take this parcel). Result: PickupPoint[] */
 final class Pickup extends Request

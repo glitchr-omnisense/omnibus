@@ -1,8 +1,8 @@
 <?php
 
-namespace Omnibus\Core\Request;
+namespace Omnibus\Request;
 
-use Omnibus\Core\Model\Tracking as TrackingModel;
+use Omnibus\Model\Tracking as TrackingModel;
 
 /** Where is this parcel? Result: Model\Tracking */
 final class Tracking extends Request

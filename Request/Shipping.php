@@ -1,9 +1,9 @@
 <?php
 
-namespace Omnibus\Core\Request;
+namespace Omnibus\Request;
 
-use Omnibus\Core\Model\Label;
-use Omnibus\Core\Model\Shipment;
+use Omnibus\Model\Label;
+use Omnibus\Model\Shipment;
 
 /** Book the shipment with the carrier. Result: the Label. */
 final class Shipping extends Request

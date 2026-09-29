@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnibus\Core\Model;
+namespace Omnibus\Model;
 
 /** Where a parcel is: its latest status and every step so far, oldest first. */
 final readonly class Tracking

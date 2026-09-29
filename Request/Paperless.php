@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnibus\Core\Request;
+namespace Omnibus\Request;
 
 /**
  * Customs documents sent electronically (paperless trade) for a shipment

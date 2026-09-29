@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnibus\Core\Model;
+namespace Omnibus\Model;
 
 /** Every carrier's statuses, folded onto one scale. */
 enum TrackingStatus: string

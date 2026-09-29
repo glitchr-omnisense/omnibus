@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnibus\Core\Action;
+namespace Omnibus\Action;
 
 /** An action that talks to the carrier through the gateway's API client. */
 interface ApiAwareInterface

@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnibus\Core\Model;
+namespace Omnibus\Model;
 
 /** What a service costs for a shipment (minor units) and how long it takes. */
 final readonly class Rate

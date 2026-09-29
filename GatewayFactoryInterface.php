@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnibus\Core;
+namespace Omnibus;
 
 /** Builds a carrier's gateway from its options (credentials, sandbox, rates...). */
 interface GatewayFactoryInterface

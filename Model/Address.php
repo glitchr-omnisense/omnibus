@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnibus\Core\Model;
+namespace Omnibus\Model;
 
 /** A postal address: the sender's, the recipient's, a pickup point's. */
 final readonly class Address

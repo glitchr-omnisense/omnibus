@@ -1,8 +1,8 @@
 <?php
 
-namespace Omnibus\Core\Request;
+namespace Omnibus\Request;
 
-use Omnibus\Core\Model\Label;
+use Omnibus\Model\Label;
 
 /** The label of a shipment booked earlier, again (a reprint). Result: the Label. */
 final class GetSlip extends Request

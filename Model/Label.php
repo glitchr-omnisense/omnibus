@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnibus\Core\Model;
+namespace Omnibus\Model;
 
 /** The shipping label (or slip) a carrier issued: its tracking number and the printable document. */
 final readonly class Label
