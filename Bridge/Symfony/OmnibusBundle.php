@@ -2,11 +2,31 @@
 
 namespace Omnibus\Bridge\Symfony;
 
+use Omnibus\Amazon\AmazonGatewayFactory;
+use Omnibus\Aramex\AramexGatewayFactory;
+use Omnibus\Auspost\AuspostGatewayFactory;
+use Omnibus\Bluedart\BluedartGatewayFactory;
+use Omnibus\CanadaPost\CanadaPostGatewayFactory;
+use Omnibus\Canpar\CanparGatewayFactory;
+use Omnibus\Chronopost\ChronopostGatewayFactory;
 use Omnibus\Colissimo\ColissimoGatewayFactory;
 use Omnibus\GatewayFactoryInterface;
 use Omnibus\GatewayInterface;
+use Omnibus\DbSchenker\DbSchenkerGatewayFactory;
+use Omnibus\Dhl\DhlGatewayFactory;
+use Omnibus\Dtdc\DtdcGatewayFactory;
+use Omnibus\Fedex\FedexGatewayFactory;
+use Omnibus\Gls\GlsGatewayFactory;
+use Omnibus\JdlExpress\JdlExpressGatewayFactory;
 use Omnibus\MondialRelay\MondialRelayGatewayFactory;
 use Omnibus\Offline\OfflineGatewayFactory;
+use Omnibus\Purolator\PurolatorGatewayFactory;
+use Omnibus\RoyalMail\RoyalMailGatewayFactory;
+use Omnibus\SfExpress\SfExpressGatewayFactory;
+use Omnibus\Tnt\TntGatewayFactory;
+use Omnibus\Ups\UpsGatewayFactory;
+use Omnibus\Usps\UspsGatewayFactory;
+use Omnibus\ZtoExpress\ZtoExpressGatewayFactory;
 use Omnibus\Registry;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -18,7 +38,8 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_it
 
 /**
  * Omnibus in a Symfony application: the carrier packages installed
- * (omnibus/offline, omnibus/mondial-relay, omnibus/colissimo) registered,
+ * (omnibus/offline, omnibus/mondial-relay, omnibus/colissimo, omnibus/ups...
+ * every omnibus/* package) registered,
  * the shop's gateways built from configuration, Omnibus\Registry autowired,
  * and each gateway injectable by its name:
  *
@@ -37,7 +58,12 @@ final class OmnibusBundle extends AbstractBundle
     protected string $extensionAlias = 'omnibus';
 
     /** The carrier packages this bundle knows, registered when installed. */
-    private const FACTORIES = [OfflineGatewayFactory::class, MondialRelayGatewayFactory::class, ColissimoGatewayFactory::class];
+    private const FACTORIES = [
+        OfflineGatewayFactory::class, MondialRelayGatewayFactory::class, ColissimoGatewayFactory::class, ChronopostGatewayFactory::class,
+        UpsGatewayFactory::class, FedexGatewayFactory::class, DhlGatewayFactory::class, TntGatewayFactory::class, GlsGatewayFactory::class, DbSchenkerGatewayFactory::class,
+        UspsGatewayFactory::class, RoyalMailGatewayFactory::class, CanadaPostGatewayFactory::class, PurolatorGatewayFactory::class, CanparGatewayFactory::class, AuspostGatewayFactory::class,
+        AramexGatewayFactory::class, BluedartGatewayFactory::class, DtdcGatewayFactory::class, SfExpressGatewayFactory::class, JdlExpressGatewayFactory::class, ZtoExpressGatewayFactory::class, AmazonGatewayFactory::class,
+    ];
 
     public function configure(DefinitionConfigurator $definition): void
     {

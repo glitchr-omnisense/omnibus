@@ -1,0 +1,5 @@
+.env
+labels/*
+!labels/.gitkeep
+plugins/*
+!plugins/.gitkeep

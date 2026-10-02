@@ -1,0 +1,29 @@
+# glitchr/omnibus with every carrier package, your test keys in .env:
+#
+#   cp .env.dist .env                                   # fill in the keys at hand
+#   docker compose run --rm omnibus gateways            # which carriers are installed and configured
+#   docker compose run --rm omnibus rate ups --to GB    # the carrier's prices for a parcel
+#   docker compose run --rm omnibus ship ups            # a label, saved under labels/
+#   docker compose run --rm omnibus track ups 1Z...
+#   docker compose run --rm omnibus test                # every package's tests
+#
+# Carriers come from GitHub (branch 2.x) unless their checkout sits under
+# OMNIBUS_PLUGINS (set it to ../.. in .env when this core sits in the
+# workspace beside them): then that checkout is what runs.
+name: omnibus-harness
+
+services:
+  omnibus:
+    build: .
+    image: glitchr/omnibus-harness
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ..:/omnibus/core
+      - ${OMNIBUS_PLUGINS:-./plugins}:/omnibus/plugins:ro
+      - ./labels:/harness/labels
+      - harness:/harness
+
+volumes:
+  harness:

@@ -1,0 +1,6 @@
+#!/usr/bin/env php
+<?php
+
+require '/harness/vendor/autoload.php';
+
+exit(Omnibus\Harness\Console::create()->run());
