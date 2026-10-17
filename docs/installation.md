@@ -1,7 +1,7 @@
 # Installation and first calls
 
 ```sh
-composer require glitchr/omnibus omnibus/offline            # no carrier: the shop's own rates
+composer require omniscient/omnibus omnibus/offline            # no carrier: the shop's own rates
 composer require omnibus/mondial-relay omnibus/ups ...      # a carrier's API
 ```
 
@@ -69,7 +69,7 @@ unknown
 shop: La boutique, 75001 Paris
 ```
 
-(run on 2026-10-05 in an empty directory, after `composer require glitchr/omnibus omnibus/offline`:
+(run on 2026-10-05 in an empty directory, after `composer require omniscient/omnibus omnibus/offline`:
 three packages installed, `symfony/http-client-contracts` the only one that is not Omnibus's)
 
 No key, no network: the shop hands the parcel over itself, so its tracking is the number typed

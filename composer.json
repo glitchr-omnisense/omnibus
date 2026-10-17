@@ -1,5 +1,5 @@
 {
-    "name": "glitchr/omnibus",
+    "name": "omniscient/omnibus",
     "type": "library",
     "description": "Omnibus: one contract for parcel carriers - rates, labels, tracking, pickup points - and its Symfony bundle (the Payum of shipping).",
     "keywords": [
@@ -27,6 +27,9 @@
         "symfony/dependency-injection": "^6.4|^7.0|^8.0",
         "symfony/http-client": "^6.4|^7.0|^8.0",
         "symfony/http-kernel": "^6.4|^7.0|^8.0"
+    },
+    "replace": {
+        "glitchr/omnibus": "self.version"
     },
     "suggest": {
         "omnibus/offline": "Delivery without a carrier: collected, delivered by hand, a flat rate",
