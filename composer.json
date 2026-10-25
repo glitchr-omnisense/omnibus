@@ -35,8 +35,10 @@
         "omnibus/offline": "Delivery without a carrier: collected, delivered by hand, a flat rate",
         "omnibus/mondial-relay": "Mondial Relay: relay points, labels, tracking",
         "omnibus/colissimo": "Colissimo (La Poste)",
+        "phpunit/phpunit": "A carrier's tests: Omnibus\\Testing\\GatewayContractTests, the conformance suite every carrier runs",
         "symfony/config": "In a Symfony application: the configuration of Omnibus\\Bridge\\Symfony\\OmnibusBundle",
         "symfony/dependency-injection": "In a Symfony application: the services of Omnibus\\Bridge\\Symfony\\OmnibusBundle",
+        "symfony/http-client": "A carrier's tests: Omnibus\\Testing\\RecordedHttpClient, the recorded answers the conformance suite runs on",
         "symfony/http-kernel": "In a Symfony application: Omnibus\\Bridge\\Symfony\\OmnibusBundle itself"
     },
     "autoload": {

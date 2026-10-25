@@ -141,4 +141,10 @@ secrets.
 | `InvalidConfigException` | a gateway not configured, a factory not installed, an option missing |
 | `CarrierException` | the carrier refused, or could not be reached |
 
-All implement `Omnibus\Exception\OmnibusException`.
+All implement `Omnibus\Exception\OmnibusException`. Every failure of a carrier is a
+`CarrierException` whose `$carrier` is the gateway's name: an HTTP error status (401 and 403, a
+credential refused; 404; 429, too many requests; 5xx), a network error, a body the carrier's client
+cannot read. Never an HTTP client's own exception, and never an empty answer in place of the
+failure: no rates because the carrier is down is an exception, not `[]`. The carrier's own error
+code, when it gives one, is `$carrierCode`. The rule is checked on every carrier by the conformance
+suite ([Writing a carrier](providers.md)).

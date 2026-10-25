@@ -9,6 +9,7 @@ use Omnibus\Exception\RequestNotSupportedException;
 use Omnibus\GatewayFactory;
 use Omnibus\Model\Label;
 use Omnibus\Registry;
+use Omnibus\Testing\Fixtures;
 use Omnibus\Request\Cancel;
 use Omnibus\Request\Rating;
 use Omnibus\Request\Request;

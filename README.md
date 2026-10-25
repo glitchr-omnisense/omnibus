@@ -133,6 +133,25 @@ docker compose run --rm omnibus test                               # every packa
 - [Installation and first calls](docs/installation.md): plain PHP first
 - [Symfony](docs/symfony.md)
 - [The Docker harness](docs/harness.md)
+- [Writing a carrier](docs/providers.md), and its conformance suite
+
+## Verified, and not
+
+Run on 2026-10-25 in the workspace (every package from its checkout, PHP 8.4, PHPUnit 11.5): 383
+tests green. Each of the 23 carriers runs the conformance suite (`Omnibus\Testing\GatewayContractTests`,
+[docs/providers.md](docs/providers.md#conformance-suite)) in `Tests/<Carrier>ContractTest.php`, offline, on
+recorded answers: the factory and the registry, required and operation options, each request
+supported or refused as `supports()` says, the models' invariants, configured rates, and every
+failure of the carrier (HTTP 401, 403, 404, 429, 5xx, network, unreadable body, login refused) a
+`CarrierException`. `omnibus/offline` and `omnibus/colissimo` call no carrier: their failure check
+is skipped, not passed.
+
+Not verified: that the carriers' APIs answer as recorded. The recorded answers are written from
+each carrier's published documentation; no carrier was called for this run (Mondial Relay and
+Chronopost publish test accounts the Docker harness can call, `docker compose run --rm omnibus
+track mondial_relay ...`). The API shapes of DB Schenker's bookings, Blue Dart,
+DTDC, SF Express, JD Logistics and ZTO are guesses from documentation, flagged "unverified" in their
+READMEs. Colissimo's web services are not wired (configured rates only).
 
 ## Responsibility
 
