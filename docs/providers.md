@@ -1,4 +1,9 @@
-# Writing a carrier
+---
+title: Writing a carrier
+order: 80
+---
+
+## Writing a carrier
 
 A carrier is a package `omnibus/<carrier>`, namespace `Omnibus\<Carrier>\`: a factory, an API
 client, one action per request it answers, and its tests. `omnibus/ups` is a complete example.
@@ -12,7 +17,7 @@ ups/
   Tests/UpsContractTest.php  # the conformance suite
 ```
 
-## The factory
+### The factory
 
 ```php
 final class AcmeGatewayFactory extends GatewayFactory
@@ -55,7 +60,7 @@ The rules every carrier keeps:
   more than the limit asked, opening hours `"HH:MM"` by ISO weekday; tracking events oldest first;
   `Cancel` and `Paperless` answer `true` or `false`.
 
-## Conformance suite
+### Conformance suite
 
 `Omnibus\Testing\GatewayContractTests` is those rules as PHPUnit tests. A carrier's test case uses
 the trait and gives its factory, working options and the carrier's recorded answers; the suite runs

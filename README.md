@@ -130,10 +130,21 @@ docker compose run --rm omnibus test                               # every packa
 
 ## Documentation
 
+The manual, in [docs/](docs/index.md):
+
 - [Installation and first calls](docs/installation.md): plain PHP first
-- [Symfony](docs/symfony.md)
+- [Symfony](docs/symfony.md) and [Laravel](docs/laravel.md)
+- [Concepts](docs/concepts.md): gateways, factories, the registry, requests and actions, every model
+- Usage: [rates](docs/usage-rating.md), [shipments and labels](docs/usage-shipping.md),
+  [tracking](docs/usage-tracking.md), [pickup points](docs/usage-pickup.md),
+  [slips, cancellations and customs documents](docs/usage-after-shipping.md)
+- [Configuration reference](docs/configuration.md): the `rates` option, every carrier's options
+- [Errors](docs/errors.md) and [testing](docs/testing.md)
 - [The Docker harness](docs/harness.md)
 - [Writing a carrier](docs/providers.md), and its conformance suite
+- [Verified, and not](docs/verified.md)
+
+Each carrier has its own manual in its repository's `docs/index.md`.
 
 ## Verified, and not
 
