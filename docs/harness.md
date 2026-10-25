@@ -1,4 +1,9 @@
-# The Docker harness
+---
+title: The Docker harness
+order: 70
+---
+
+## The Docker harness
 
 `docker/` runs this package with every `omnibus/*` carrier installed - from GitHub (branch 2.x),
 or from the checkouts beside this one when `OMNIBUS_PLUGINS=../..` is set in `docker/.env` - and
@@ -28,11 +33,31 @@ docker compose run --rm omnibus track ups 1Z999AA10123456784
 docker compose run --rm omnibus pickup mondial_relay --to-postcode 75009
 ```
 
+Options of the console's commands:
+
+| Option | Commands | Default | |
+|---|---|---|---|
+| `--from-<field>`, `--to-<field>` | `rate`, `ship`, `pickup` | `HARNESS_SENDER_<FIELD>`, `HARNESS_RECIPIENT_<FIELD>` from `.env` | the sender's and the recipient's `name`, `company`, `street`, `postcode`, `city`, `country`, `email`, `phone` |
+| `--weight`, `-w` | `rate`, `ship`, `pickup` | `800` | grams |
+| `--size` | `rate`, `ship`, `pickup` | `30x20x10` | length x width x height, cm |
+| `--value` | `rate`, `ship`, `pickup` | `2500` | minor units |
+| `--currency` | `rate`, `ship`, `pickup` | `EUR` | |
+| `--reference`, `-r` | `rate`, `ship`, `pickup` | `OMNIBUS-<ymd-His>` | |
+| `--service`, `-s` | `ship` | - | the carrier's service code |
+| `--pickup-point`, `-p` | `ship` | - | a pickup point id |
+| `--option`, `-o` | `ship` | - | a shipment option, `name=value`, repeatable |
+| `--locale`, `-l` | `track` | `fr` | |
+| `--limit` | `pickup` | `10` | |
+
+A carrier's failure prints its message (and its code) and exits 1; a configuration error exits 2.
+A carrier is "configured" once every variable its entry in `docker/harness/config/gateways.php`
+needs is set in `docker/.env`.
+
 Mondial Relay runs on its public test brand until `MONDIAL_RELAY_ENSEIGNE` is set; Chronopost has
 no sandbox, its published test account is in `.env.dist`. Both are test identifiers the carriers
 publish for everyone, not secrets.
 
-## Bare: no bundle, no container
+### Bare: no bundle, no container
 
 The console above is a `symfony/console` application over a registry built by hand; `bare` is
 less still - one PHP script, `docker/harness/bin/bare`, that requires the autoloader and nothing

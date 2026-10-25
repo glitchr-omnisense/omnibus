@@ -1,19 +1,32 @@
-# Installation and first calls
+---
+title: Installation
+order: 10
+---
+
+## Installation
 
 ```sh
-composer require omniscient/omnibus omnibus/offline            # no carrier: the shop's own rates
-composer require omnibus/mondial-relay omnibus/ups ...      # a carrier's API
+composer require omniscient/omnibus omnibus/offline       # no carrier: the shop's own rates
+composer require omnibus/mondial-relay omnibus/ups ...    # a carrier's API, one package each
 ```
 
-PHP 8.2 or later.
+### Requirements
 
-Omnibus needs no framework. The core requires nothing but `symfony/http-client-contracts`; a
-carrier that calls an API requires `symfony/http-client`, a library that stands alone;
-`omnibus/offline` and `omnibus/colissimo` call nothing and require neither. It runs the same in
-plain PHP, in a worker, in Laravel or Slim, and in Symfony, where a bundle does the wiring
-([Symfony](symfony.md)).
+- PHP 8.2 or later.
+- `omniscient/omnibus` requires `symfony/http-client-contracts` (^3.0) and nothing else.
+- A carrier that calls an API requires `symfony/http-client` (^6.4, ^7.0 or ^8.0), a library that
+  stands alone and loads no framework. `omnibus/offline` and `omnibus/colissimo` call nothing and
+  require neither.
+- No `ext-soap`: the SOAP carriers (Chronopost, Purolator, Canpar) write and read their XML
+  themselves. `omnibus/mondial-relay` requires `ext-simplexml`, enabled in most PHP builds.
 
-## Plain PHP
+Omnibus runs the same in plain PHP, in a worker, in Laravel or Slim, and in Symfony, where a bundle
+does the wiring ([Symfony](symfony.md)).
+
+### Plain PHP
+
+A whole script, with no carrier and no network: the shop's own prices, a tracking number typed at
+the post office counter, click and collect at the shop.
 
 ```php
 <?php // bare.php
@@ -69,27 +82,26 @@ unknown
 shop: La boutique, 75001 Paris
 ```
 
-(run on 2026-10-05 in an empty directory, after `composer require omniscient/omnibus omnibus/offline`:
-three packages installed, `symfony/http-client-contracts` the only one that is not Omnibus's)
+(run on 2026-10-25 in the [harness](harness.md), PHP 8.4; first run on 2026-10-05 in an empty
+directory after `composer require omniscient/omnibus omnibus/offline`: three packages installed,
+`symfony/http-client-contracts` the only one that is not Omnibus's)
 
-No key, no network: the shop hands the parcel over itself, so its tracking is the number typed
-and its state is not known to anyone (`unknown`). That is all there is to it:
+No key, no network: the shop hands the parcel over itself, so its tracking is the number typed and
+its state is not known to anyone (`unknown`). The pieces:
 
 - a **factory** per carrier package (`OfflineGatewayFactory`, `MondialRelayGatewayFactory`,
-  `UpsGatewayFactory`...); one that calls an API takes the HTTP client to call with - the
+  `UpsGatewayFactory`...). One that calls an API takes the HTTP client to call with - the
   application's, a `MockHttpClient` in a test - and with none given makes its own
-  (`HttpClient::create()`; Mondial Relay's asks for one);
-- the **registry**, built by hand from the factories and the gateways' options, by name: `get()`,
-  and `create($name, $overrides)` for keys typed in a back office;
+  (`HttpClient::create()`);
+- the **registry**, built from the factories and the gateways' options, by name: `get()`, and
+  `create($name, $overrides)` for keys typed in a back office;
 - the **gateways** it gives: `rate()`, `ship()`, `track()`, `pickupPoints()`, and for the carriers
-  that do them a slip and a cancellation - `supports()` says beforehand what one does. A `rates`
-  option gives prices from configuration to a carrier that has no rating service.
+  that do them `slip()` and `cancel()` - `supports()` says beforehand what a gateway does.
 
-No class of a framework is loaded on the way - a test of this package checks it in a process of
-its own (`Tests/BareTest.php`), and so does `docker compose run --rm omnibus bare`
-([harness](harness.md)).
+No class of a framework is loaded on the way: `Tests/BareTest.php` checks it in a process of its
+own, and so does `docker compose run --rm omnibus bare` ([harness](harness.md)).
 
-## A carrier's API
+### A carrier's API
 
 ```php
 use Omnibus\Ups\UpsGatewayFactory;
@@ -108,43 +120,21 @@ $ups->track($label->trackingNumber);                 // status, events
 $ups->pickupPoints($shipment->recipient, 10);        // Access Points near an address
 ```
 
-In a test, the same factory on a client that answers from files:
+Building a gateway calls nothing: a carrier's token is asked for on the first call, and a missing
+required option is reported by `create()` as an `InvalidConfigException` naming it
+(`The "ups" gateway needs: client_secret, account_number.`).
 
-```php
-use Symfony\Component\HttpClient\MockHttpClient;
-use Symfony\Component\HttpClient\Response\MockResponse;
+Two carriers publish test identifiers for everyone, usable without a contract: Mondial Relay's test
+brand (`['sandbox' => true]` fills `enseigne` and `private_key` with `BDTEST13` and `PrivateK`) and Chronopost's test
+account (`ChronopostGatewayFactory::TEST_ACCOUNT`, `::TEST_PASSWORD`). They are test identifiers,
+not secrets.
 
-$http = new MockHttpClient(static fn (string $method, string $url) => new MockResponse(file_get_contents(__DIR__.'/rating.json')));
-$ups = (new UpsGatewayFactory($http))->create(['client_id' => 'ups_test_not_a_real_client_id', 'client_secret' => 'ups_test_not_a_real_secret', 'account_number' => '000000']);
-```
+### In a framework
 
-Two carriers publish test identifiers for everyone, usable without a contract: Mondial Relay's
-test brand (`['sandbox' => true]`) and Chronopost's test account
-(`ChronopostGatewayFactory::TEST_ACCOUNT`, `::TEST_PASSWORD`). They are test identifiers, not
-secrets.
-
-## In a framework
-
-- **Symfony**: `Omnibus\Bridge\Symfony\OmnibusBundle` registers the factories on the
-  application's `http_client`, builds the registry from `config/packages/omnibus.yaml` and makes
-  each gateway injectable by its name: see [Symfony](symfony.md). Its components
-  (`symfony/config`, `symfony/dependency-injection`, `symfony/http-kernel`) are not required by
-  this package: a Symfony application has them.
-- **Any other**: build the `Registry` once, where the framework builds its services (a service
-  provider, a container definition), as the script above does.
-
-## Errors
-
-| Exception | When |
-|---|---|
-| `RequestNotSupportedException` | the carrier does not do that: `supports()` says so beforehand |
-| `InvalidConfigException` | a gateway not configured, a factory not installed, an option missing |
-| `CarrierException` | the carrier refused, or could not be reached |
-
-All implement `Omnibus\Exception\OmnibusException`. Every failure of a carrier is a
-`CarrierException` whose `$carrier` is the gateway's name: an HTTP error status (401 and 403, a
-credential refused; 404; 429, too many requests; 5xx), a network error, a body the carrier's client
-cannot read. Never an HTTP client's own exception, and never an empty answer in place of the
-failure: no rates because the carrier is down is an exception, not `[]`. The carrier's own error
-code, when it gives one, is `$carrierCode`. The rule is checked on every carrier by the conformance
-suite ([Writing a carrier](providers.md)).
+- **Symfony**: `Omnibus\Bridge\Symfony\OmnibusBundle` registers the factories on the application's
+  `http_client`, builds the registry from `config/packages/omnibus.yaml` and makes each gateway
+  injectable by its name: [Symfony](symfony.md).
+- **Laravel**: no bridge package is needed; a service provider builds the registry once:
+  [Laravel](laravel.md).
+- **Any other**: build the `Registry` once, where the framework builds its services (a container
+  definition, a factory), as the script above does.
