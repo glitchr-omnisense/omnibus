@@ -3,7 +3,7 @@ title: Laravel
 order: 16
 ---
 
-## Laravel
+# Laravel
 
 omnibridge/laravel, the bridge that hosts omnibase in Laravel, has no Omnibus provider: none is
 needed. The registry is plain PHP; a service provider of the application builds it once, from a

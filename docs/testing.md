@@ -3,12 +3,12 @@ title: Testing
 order: 60
 ---
 
-## Testing
+# Testing
 
 Testing an application that ships with Omnibus. Writing a carrier and its conformance suite:
 [Writing a carrier](providers.md).
 
-### The offline gateway as a fake
+## The offline gateway as a fake
 
 `omnibus/offline` calls nothing and answers rates, shipments, tracking and pickup points from its
 options: in a test, configure the gateway the application uses with the `offline` factory.
@@ -28,7 +28,7 @@ omnibus:
 The gateway keeps the name `relais` for the application; its `getName()` is `offline`. Booking
 answers the shipment's `tracking_number` option, else its reference; tracking answers `UNKNOWN`.
 
-### A carrier on recorded answers
+## A carrier on recorded answers
 
 To test the application's handling of a real carrier's answers - and of its failures - give the
 carrier's factory a `MockHttpClient` (symfony/http-client):
@@ -74,7 +74,7 @@ $http = new RecordedHttpClient([
 ]);
 ```
 
-### Fixtures
+## Fixtures
 
 `Omnibus\Testing\Fixtures` gives the addresses and shipments the carriers' own tests use:
 
@@ -84,7 +84,7 @@ $http = new RecordedHttpClient([
 | `Fixtures::customer(string $country = 'FR')` | Émile Zola, 21 bis rue de Bruxelles / Bâtiment B, 75009 Paris, in `$country`, with e-mail and phone |
 | `Fixtures::shipment(int ...$grams)` | shop to customer, one parcel of 800 g unless weights are given, reference `CMD-1042` |
 
-### In a Symfony functional test
+## In a Symfony functional test
 
 The registry and the gateways are services: replace a gateway's factory options per environment
 (above), or replace the HTTP client the factories receive (`http_client`) with a

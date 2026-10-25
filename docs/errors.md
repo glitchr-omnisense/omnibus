@@ -3,7 +3,7 @@ title: Errors
 order: 50
 ---
 
-## Errors
+# Errors
 
 Every exception Omnibus throws implements `Omnibus\Exception\OmnibusException` (a `\Throwable`):
 
@@ -16,7 +16,7 @@ Every exception Omnibus throws implements `Omnibus\Exception\OmnibusException` (
 `Shipment`'s constructor throws `\InvalidArgumentException` (not an `OmnibusException`) when given
 no parcel.
 
-### CarrierException
+## CarrierException
 
 ```php
 use Omnibus\Exception\CarrierException;
@@ -46,7 +46,7 @@ Never an HTTP client's own exception, never a `\TypeError` from an unexpected sh
 empty answer in place of the failure: no rates because the carrier is down is an exception, not
 `[]`.
 
-### What to catch where
+## What to catch where
 
 | Where | Catch |
 |---|---|

@@ -3,7 +3,7 @@ title: Pickup points
 order: 34
 ---
 
-## Pickup points
+# Pickup points
 
 ```php
 $points = $gateway->pickupPoints($address, 10, $parcel);   // PickupPoint[], nearest first
@@ -13,7 +13,7 @@ $points = $gateway->pickupPoints($address, 10, $parcel);   // PickupPoint[], nea
 parcel: at most `$limit` (10 by default), nearest first. The parcel is optional; carriers that
 filter by weight use it (Mondial Relay sends its weight), the others ignore it.
 
-### A pickup point selector
+## A pickup point selector
 
 ```php
 use Omnibus\Model\Address;
@@ -52,7 +52,7 @@ opening hours. Each carrier's manual says what its search sends and what comes b
 > not nearest first; UPS passes its `Day` numbers and hours on unchecked (whether they are ISO
 > weekdays and `HH:MM` is not verified).
 
-### Click and collect
+## Click and collect
 
 `omnibus/offline` answers the shop's own counters, configured, wherever the customer is:
 
@@ -68,7 +68,7 @@ opening hours. Each carrier's manual says what its search sends and what comes b
 
 The points come in the configured order, cut to `$limit`, with no distance.
 
-### Carriers without pickup points
+## Carriers without pickup points
 
 TNT, GLS, DB Schenker, Royal Mail, Canpar, Australia Post, Blue Dart, DTDC, SF Express, JD Logistics,
 ZTO and Amazon answer no pickup point search; DHL answers one only with `location_api_key` (its

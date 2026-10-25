@@ -3,7 +3,7 @@ title: Tracking
 order: 33
 ---
 
-## Tracking
+# Tracking
 
 ```php
 $tracking = $gateway->track('1Z999AA10123456784', 'fr');   // Tracking
@@ -13,7 +13,7 @@ $tracking = $gateway->track('1Z999AA10123456784', 'fr');   // Tracking
 descriptions (`fr` by default); carriers that translate use it, the others ignore it, and each
 carrier's manual says how it is sent (`fr` becomes `fr_FR` for UPS).
 
-### Reading a tracking
+## Reading a tracking
 
 ```php
 use Omnibus\Model\TrackingStatus;
@@ -53,7 +53,7 @@ A tracking number the carrier does not know is, depending on the carrier, an emp
 status `UNKNOWN` or a `CarrierException` carrying the carrier's error code: check each carrier's
 manual.
 
-### Polling
+## Polling
 
 Omnibus has no webhook and no scheduler: an application polls. A Symfony application can do it
 from a scheduled message (symfony/scheduler) or a command run by cron:
@@ -71,12 +71,12 @@ foreach ($orders->inTransit() as $order) {
 Keep the gateway's name with the order (the registry's name, `relais`, `ups`...) so the parcel is
 tracked by the carrier that booked it.
 
-### Without a carrier
+## Without a carrier
 
 `omnibus/offline` answers every number with status `UNKNOWN` and no event: there is no carrier to
 ask. Show the label's `trackingUrl` instead.
 
-### Carriers whose tracking needs other credentials
+## Carriers whose tracking needs other credentials
 
 Royal Mail's and DTDC's tracking APIs have credentials of their own: without
 `tracking_client_id` and `tracking_client_secret` (Royal Mail) or `tracking_username` and

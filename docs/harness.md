@@ -3,7 +3,7 @@ title: The Docker harness
 order: 70
 ---
 
-## The Docker harness
+# The Docker harness
 
 `docker/` runs this package with every `omnibus/*` carrier installed - from GitHub (branch 2.x),
 or from the checkouts beside this one when `OMNIBUS_PLUGINS=../..` is set in `docker/.env` - and
@@ -57,7 +57,7 @@ Mondial Relay runs on its public test brand until `MONDIAL_RELAY_ENSEIGNE` is se
 no sandbox, its published test account is in `.env.dist`. Both are test identifiers the carriers
 publish for everyone, not secrets.
 
-### Bare: no bundle, no container
+## Bare: no bundle, no container
 
 The console above is a `symfony/console` application over a registry built by hand; `bare` is
 less still - one PHP script, `docker/harness/bin/bare`, that requires the autoloader and nothing

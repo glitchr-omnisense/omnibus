@@ -3,7 +3,7 @@ title: Rates
 order: 31
 ---
 
-## Rates
+# Rates
 
 ```php
 $rates = $gateway->rate($shipment);     // Rate[], cheapest first
@@ -13,7 +13,7 @@ $rates = $gateway->rate($shipment);     // Rate[], cheapest first
 with a rating API asks it (UPS's `Shop`, FedEx's rate quotes, Chronopost's Quickcost...); a carrier
 without one, or a gateway with a `rates` option, prices from configuration with no call.
 
-### Pricing a shipment
+## Pricing a shipment
 
 ```php
 use Omnibus\Model\Address;
@@ -51,7 +51,7 @@ What every rating answer keeps:
 - an empty list means the carrier serves none of its services for that shipment (too heavy, a
   country not served). A carrier that could not be reached is a `CarrierException`, never `[]`.
 
-### Configured prices
+## Configured prices
 
 A shop often has negotiated prices that no public API returns, or a carrier with no rating API at
 all (Mondial Relay, Colissimo, GLS, Royal Mail...). The `rates` option gives the gateway a price
@@ -80,13 +80,13 @@ configured prices replace the API, and `rate()` calls nothing. With the harness'
 (bands `1000 => 690, 30000 => 1290`), a shipment of 800 g and 1500 g under `courier` costs
 `690 + 1290 = 1980`.
 
-### Asking for one service
+## Asking for one service
 
 `Shipment::$service` narrows configured rates to that service. Carriers' rating APIs differ: most
 price every service whatever `service` says (UPS's `Shop`), some take it into account; each
 carrier's manual says which.
 
-### When the carrier has no rates
+## When the carrier has no rates
 
 ```php
 use Omnibus\Request\Rating;

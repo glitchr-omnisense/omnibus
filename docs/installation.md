@@ -3,14 +3,14 @@ title: Installation
 order: 10
 ---
 
-## Installation
+# Installation
 
 ```sh
 composer require omniscient/omnibus omnibus/offline       # no carrier: the shop's own rates
 composer require omnibus/mondial-relay omnibus/ups ...    # a carrier's API, one package each
 ```
 
-### Requirements
+## Requirements
 
 - PHP 8.2 or later.
 - `omniscient/omnibus` requires `symfony/http-client-contracts` (^3.0) and nothing else.
@@ -23,7 +23,7 @@ composer require omnibus/mondial-relay omnibus/ups ...    # a carrier's API, one
 Omnibus runs the same in plain PHP, in a worker, in Laravel or Slim, and in Symfony, where a bundle
 does the wiring ([Symfony](symfony.md)).
 
-### Plain PHP
+## Plain PHP
 
 A whole script, with no carrier and no network: the shop's own prices, a tracking number typed at
 the post office counter, click and collect at the shop.
@@ -101,7 +101,7 @@ its state is not known to anyone (`unknown`). The pieces:
 No class of a framework is loaded on the way: `Tests/BareTest.php` checks it in a process of its
 own, and so does `docker compose run --rm omnibus bare` ([harness](harness.md)).
 
-### A carrier's API
+## A carrier's API
 
 ```php
 use Omnibus\Ups\UpsGatewayFactory;
@@ -129,7 +129,7 @@ brand (`['sandbox' => true]` fills `enseigne` and `private_key` with `BDTEST13` 
 account (`ChronopostGatewayFactory::TEST_ACCOUNT`, `::TEST_PASSWORD`). They are test identifiers,
 not secrets.
 
-### In a framework
+## In a framework
 
 - **Symfony**: `Omnibus\Bridge\Symfony\OmnibusBundle` registers the factories on the application's
   `http_client`, builds the registry from `config/packages/omnibus.yaml` and makes each gateway
