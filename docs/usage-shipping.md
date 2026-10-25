@@ -3,7 +3,7 @@ title: Shipments and labels
 order: 32
 ---
 
-## Shipments and labels
+# Shipments and labels
 
 ```php
 $label = $gateway->ship($shipment);     // Label: tracking number, the document
@@ -13,7 +13,7 @@ $label = $gateway->ship($shipment);     // Label: tracking number, the document
 call that commits the shop (a carrier invoices booked shipments): ask for rates and let the
 customer choose before, book once the order is paid.
 
-### Booking
+## Booking
 
 ```php
 use Omnibus\Model\Address;
@@ -39,7 +39,7 @@ Give the recipient's phone and e-mail where you have them: the carriers that tak
 on, for the delivery notices. Each carrier's manual lists what it sends, what it cuts (names of 35
 characters, street lines...) and the shipment options it reads.
 
-### The document
+## The document
 
 A label carries its document in one of two ways, or not at all:
 
@@ -66,7 +66,7 @@ if (null !== $label->content) {
 Keep the document with the order: a reprint (`slip()`) is offered by few carriers
 ([After shipping](usage-after-shipping.md)).
 
-### To a pickup point
+## To a pickup point
 
 ```php
 $points = $gateway->pickupPoints($shipment->recipient, 5);   // the customer picks one
@@ -79,13 +79,13 @@ The carrier delivers to `pickupPoint`, the id one of its own `PickupPoint`s answ
 carrier's manual says how the id is sent (Mondial Relay takes `FR-066974`) and which services
 deliver to points (`Rate::$toPickupPoint`).
 
-### Several parcels
+## Several parcels
 
 A shipment of several parcels is booked in one call where the carrier allows it; the label then
 has the shipment's (master) tracking number. Carriers differ in what they do with each parcel's
 weight and size: see each carrier's manual.
 
-### Without a carrier
+## Without a carrier
 
 `omnibus/offline` books nothing: its label's tracking number is the shipment's
 `tracking_number` option (typed from the post office's receipt), else its `reference`, else a

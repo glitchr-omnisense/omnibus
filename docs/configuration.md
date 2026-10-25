@@ -3,9 +3,9 @@ title: Configuration reference
 order: 40
 ---
 
-## Configuration reference
+# Configuration reference
 
-### The registry's configuration
+## The registry's configuration
 
 `new Registry($factories, $config)`, and the bundle's `omnibus.gateways` ([Symfony](symfony.md)),
 take the same shape: gateway name => factory and options.
@@ -23,7 +23,7 @@ The gateway name is the application's (`relais`, `express`, `retrait`); the fact
 carrier package's (`mondial_relay`, `ups`, `offline`). Several gateways may use the same factory
 with different options (two Chronopost accounts, say).
 
-### The rates option
+## The rates option
 
 Every carrier accepts `rates`: a list of services priced from configuration, by weight. Set, it
 adds an `Omnibus\Action\ConfiguredRatingAction`, and every carrier that has a rating API leaves
@@ -60,7 +60,7 @@ How a shipment is priced, for each service in the list:
 
 The rates are sorted cheapest first. A service skipped gives no rate; no service left gives `[]`.
 
-### Carriers' options
+## Carriers' options
 
 Each carrier's manual explains its options; the table lists them as each factory declares them
 (required options must be set and not empty; the others with their defaults).
@@ -95,7 +95,7 @@ Besides these, each carrier reads shipment options (`Shipment::$options`: `label
 `description`, `instructions`, Blue Dart's `prices`...): its manual lists every option its code
 reads.
 
-### Reserved keys
+## Reserved keys
 
 Options whose name starts with `omnibus.` are the factory's own (`omnibus.factory_name`,
 `omnibus.api`, `omnibus.action.*`... [Concepts](concepts.md#factory-and-config)). Given in the

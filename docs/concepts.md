@@ -3,9 +3,9 @@ title: Concepts
 order: 20
 ---
 
-## Concepts
+# Concepts
 
-### Gateway
+## Gateway
 
 `Omnibus\GatewayInterface` is one carrier, configured. Every gateway answers the same methods; each
 typed method is a shortcut for `execute()` with its request.
@@ -32,7 +32,7 @@ actions with an instance of the request class built without its constructor, so 
 `Request\Paperless` (customs documents sent electronically) has no typed shortcut: it goes through
 `execute()`, and no carrier answers it yet.
 
-### Factory and Config
+## Factory and Config
 
 `Omnibus\GatewayFactoryInterface` builds a carrier's gateway from options:
 
@@ -71,7 +71,7 @@ Because the options are set before the defaults, a key such as `omnibus.action.t
 the options replaces the carrier's own action. `Config::defaults()` sets only keys not set yet,
 `Config::get($key, $default)` reads one, `Config::validateNotEmpty($keys)` is step 2.
 
-### Registry
+## Registry
 
 `Omnibus\Registry` holds the shop's gateways by name:
 
@@ -98,7 +98,7 @@ An unknown name (`No "x" gateway; configured: relais, retrait.`) or a factory no
 (`No "ups" factory for the "express" gateway; installed: mondial_relay, offline.`) is an
 `InvalidConfigException`.
 
-### Requests and actions
+## Requests and actions
 
 A request (`Omnibus\Request\Request`) is a question put to a gateway; the action that supports it
 answers by calling `setResult()`. `getResult()` reads the answer, `isAnswered()` says whether there
@@ -119,13 +119,13 @@ An action (`Omnibus\Action\ActionInterface`) has `supports(Request): bool` and
 calls the carrier implements `Action\ApiAwareInterface` (`setApi(object $api)`); `ApiAwareTrait`
 implements it and refuses an API client of the wrong class with an `InvalidConfigException`.
 
-### Models
+## Models
 
 All models are `final readonly` classes in `Omnibus\Model`, built with named arguments where
 convenient. Amounts are integers in minor units (cents), weights in grams, sizes in centimetres,
 countries ISO 3166-1 alpha-2, currencies ISO 4217.
 
-#### Address
+### Address
 
 A postal address: the sender's, the recipient's, a pickup point's.
 
@@ -142,7 +142,7 @@ A postal address: the sender's, the recipient's, a pickup point's.
 
 `line(int $index): string` returns a street line, `''` when there is none.
 
-#### Parcel
+### Parcel
 
 One box.
 
@@ -157,7 +157,7 @@ One box.
 `girth(): ?int` is the longest side plus twice the two others (what size bands are built on), or
 `null` when a dimension is missing.
 
-#### Shipment
+### Shipment
 
 What goes where: from the sender to the recipient, at home or at a pickup point, in one or more
 parcels, under a carrier's service.
@@ -176,7 +176,7 @@ parcels, under a carrier's service.
 `weight(): int` sums the parcels' weights; `option(string $name, mixed $default = null)` reads one
 option.
 
-#### Rate
+### Rate
 
 What a service costs for a shipment and how long it takes.
 
@@ -190,7 +190,7 @@ What a service costs for a shipment and how long it takes.
 | `days` | `?int` | `null` | transit days, when the carrier says |
 | `toPickupPoint` | `bool` | `false` | the service delivers to a pickup point, not to the door |
 
-#### Label
+### Label
 
 The shipping label (or slip) a carrier issued.
 
@@ -206,7 +206,7 @@ The shipping label (or slip) a carrier issued.
 A label may have neither `content` nor `url`: `omnibus/offline` prints nothing, ZTO's electronic
 waybill is printed by its own client.
 
-#### Tracking, TrackingEvent, TrackingStatus
+### Tracking, TrackingEvent, TrackingStatus
 
 `Tracking` is where a parcel is: `carrier`, `trackingNumber`, `status` (`TrackingStatus`) and
 `events` (`TrackingEvent[]`, oldest first). `latest(): ?TrackingEvent` is the last event.
@@ -231,7 +231,7 @@ carrier's text, in the locale asked for when the carrier translates), `location`
 `isFinal(): bool` is true for `DELIVERED` and `RETURNED`. A carrier's tracking status is the
 status of its latest event.
 
-#### PickupPoint
+### PickupPoint
 
 A relay, locker or post office a parcel can be sent to and collected from.
 

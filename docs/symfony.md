@@ -3,14 +3,14 @@ title: Symfony
 order: 15
 ---
 
-## Symfony
+# Symfony
 
 Omnibus runs without a framework ([Installation](installation.md)); in a Symfony application its
 bundle does the wiring. The bundle's components - `symfony/config`, `symfony/dependency-injection`,
 `symfony/http-kernel` (6.4, 7 or 8) - are not required by `omniscient/omnibus`: the application has
 them, and nothing of them is loaded outside Symfony.
 
-### Registering the bundle
+## Registering the bundle
 
 There is no Flex recipe: add the bundle by hand.
 
@@ -22,7 +22,7 @@ return [
 ];
 ```
 
-### Configuration
+## Configuration
 
 ```yaml
 # config/packages/omnibus.yaml
@@ -56,7 +56,7 @@ The options are not validated when the container compiles - the tree accepts any
 when the gateway is built: a required option missing or empty is an `InvalidConfigException`
 naming it, the first time the gateway is asked for.
 
-### Services
+## Services
 
 Every `omnibus/*` carrier package installed has its factory registered as a service, built on the
 application's `http_client` service (or with none, when the application has no HTTP client
@@ -89,7 +89,7 @@ and an option left empty shows only then. Keys typed in a back office rather tha
 environment: `$registry->create('relais', ['private_key' => $stored])`, a gateway built afresh with
 those options over the configured ones and not kept by the registry.
 
-### An application's own carrier
+## An application's own carrier
 
 A class of the application that implements `Omnibus\GatewayFactoryInterface` (usually by extending
 `Omnibus\GatewayFactory`) is autoconfigured: tagged `omnibus.gateway_factory`, it joins the

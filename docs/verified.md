@@ -3,9 +3,9 @@ title: Verified, and not
 order: 90
 ---
 
-## Verified, and not
+# Verified, and not
 
-### What the tests prove
+## What the tests prove
 
 Run on 2026-10-25 in the [harness](harness.md), every package from its checkout, PHP 8.4,
 PHPUnit 11.5: 383 tests, 2231 assertions, green; 2 skipped. Each of the 23 carriers runs the
@@ -29,7 +29,7 @@ The core's own tests cover the gateway, the registry, configured rates, the Symf
 (`Tests/BareTest.php`). The capability table of the [index](index.md#carriers) was probed with
 `supports()` on 2026-10-25.
 
-### What is not verified
+## What is not verified
 
 - That the carriers' APIs answer as recorded. The recorded answers are written from each carrier's
   published documentation; no carrier was called for this run. Mondial Relay and Chronopost publish
@@ -44,7 +44,7 @@ The core's own tests cover the gateway, the registry, configured rates, the Symf
 - The [Laravel](laravel.md) page was written from the registry's API, not run in a Laravel
   application.
 
-### Responsibility
+## Responsibility
 
 `omniscient/omnibus` and its `omnibus/*` carriers are independent, unofficial clients: none is
 affiliated with, endorsed by or sponsored by the services it reaches. Each service keeps its own
