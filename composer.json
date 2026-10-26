@@ -1,5 +1,5 @@
 {
-    "name": "omniscient/omnibus",
+    "name": "omnisense/omnibus",
     "type": "library",
     "description": "Omnibus: one contract for parcel carriers - rates, labels, tracking, pickup points - and its Symfony bundle (the Payum of shipping).",
     "keywords": [
@@ -29,6 +29,7 @@
         "symfony/http-kernel": "^6.4|^7.0|^8.0"
     },
     "replace": {
+        "omniscient/omnibus": "self.version",
         "glitchr/omnibus": "self.version"
     },
     "suggest": {

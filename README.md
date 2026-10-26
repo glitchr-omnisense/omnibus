@@ -1,10 +1,10 @@
-# omniscient/omnibus
+# omnisense/omnibus
 
 One contract for parcel carriers - rates, labels, tracking, pickup points - the Payum of shipping.
 
-Published as `omniscient/omnibus` (formerly `glitchr/omnibus`, which this package replaces: a
+Published as `omnisense/omnibus` (formerly `glitchr/omnibus`, which this package replaces: a
 `composer.json` that still requires the old name keeps resolving to this package and never installs
-both). `omniscient/` is the vendor of every family's core, the carriers keep `omnibus/`, the
+both). `omnisense/` is the vendor of every family's core, the carriers keep `omnibus/`, the
 namespace `Omnibus\` and the GitHub repositories do not change.
 
 ```php
@@ -54,7 +54,7 @@ the actions that support each request. A `rates` option always adds prices from 
 ## Plain PHP
 
 ```sh
-composer require omniscient/omnibus omnibus/offline
+composer require omnisense/omnibus omnibus/offline
 ```
 
 ```php
@@ -166,7 +166,7 @@ READMEs. Colissimo's web services are not wired (configured rates only).
 
 ## Responsibility
 
-`omniscient/omnibus` and its `omnibus/*` carriers are independent, unofficial clients: none is
+`omnisense/omnibus` and its `omnibus/*` carriers are independent, unofficial clients: none is
 affiliated with, endorsed by or sponsored by the services it reaches. Each service keeps its own
 terms (carrier accounts and contracts, keys, rate limits, how labels and tracking data may be used),
 named with a link in the "Responsibility" section of the README of each carrier that reaches one.

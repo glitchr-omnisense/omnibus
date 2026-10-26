@@ -7,7 +7,7 @@ order: 15
 
 Omnibus runs without a framework ([Installation](installation.md)); in a Symfony application its
 bundle does the wiring. The bundle's components - `symfony/config`, `symfony/dependency-injection`,
-`symfony/http-kernel` (6.4, 7 or 8) - are not required by `omniscient/omnibus`: the application has
+`symfony/http-kernel` (6.4, 7 or 8) - are not required by `omnisense/omnibus`: the application has
 them, and nothing of them is loaded outside Symfony.
 
 ## Registering the bundle

@@ -6,14 +6,14 @@ order: 10
 # Installation
 
 ```sh
-composer require omniscient/omnibus omnibus/offline       # no carrier: the shop's own rates
+composer require omnisense/omnibus omnibus/offline       # no carrier: the shop's own rates
 composer require omnibus/mondial-relay omnibus/ups ...    # a carrier's API, one package each
 ```
 
 ## Requirements
 
 - PHP 8.2 or later.
-- `omniscient/omnibus` requires `symfony/http-client-contracts` (^3.0) and nothing else.
+- `omnisense/omnibus` requires `symfony/http-client-contracts` (^3.0) and nothing else.
 - A carrier that calls an API requires `symfony/http-client` (^6.4, ^7.0 or ^8.0), a library that
   stands alone and loads no framework. `omnibus/offline` and `omnibus/colissimo` call nothing and
   require neither.
@@ -83,7 +83,7 @@ shop: La boutique, 75001 Paris
 ```
 
 (run on 2026-10-25 in the [harness](harness.md), PHP 8.4; first run on 2026-10-05 in an empty
-directory after `composer require omniscient/omnibus omnibus/offline`: three packages installed,
+directory after `composer require omnisense/omnibus omnibus/offline`: three packages installed,
 `symfony/http-client-contracts` the only one that is not Omnibus's)
 
 No key, no network: the shop hands the parcel over itself, so its tracking is the number typed and

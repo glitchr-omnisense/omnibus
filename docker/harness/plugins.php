@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Every carrier package: its slug (omnibus/<slug>, github.com/glitchr-studio/omnibus-<slug>)
+ * Every carrier package: its slug (omnibus/<slug>, github.com/glitchr-omnisense/omnibus-<slug>)
  * and the namespace under Omnibus\ (Omnibus\<Ns>\<Ns>GatewayFactory).
  */
 return [
