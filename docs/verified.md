@@ -46,7 +46,7 @@ The core's own tests cover the gateway, the registry, configured rates, the Symf
 
 ## Responsibility
 
-`omniscient/omnibus` and its `omnibus/*` carriers are independent, unofficial clients: none is
+`omnisense/omnibus` and its `omnibus/*` carriers are independent, unofficial clients: none is
 affiliated with, endorsed by or sponsored by the services it reaches. Each service keeps its own
 terms (carrier accounts and contracts, keys, rate limits, how labels and tracking data may be
 used), named with a link in each carrier's README. The MIT licence covers this code only and grants

@@ -1,4 +1,4 @@
-# omniscient/omnibus with every carrier package, your test keys in .env:
+# omnisense/omnibus with every carrier package, your test keys in .env:
 #
 #   cp .env.dist .env                                   # fill in the keys at hand
 #   docker compose run --rm omnibus gateways            # which carriers are installed and configured
@@ -16,7 +16,7 @@ name: omnibus-harness
 services:
   omnibus:
     build: .
-    image: omniscient/omnibus-harness
+    image: omnisense/omnibus-harness
     env_file:
       - path: .env
         required: false
