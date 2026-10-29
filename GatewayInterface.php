@@ -41,12 +41,15 @@ interface GatewayInterface
 
     public function ship(Shipment $shipment): Label;
 
+    /** @param string $trackingNumber the label's tracking number, or its carrierReference when it has one */
     public function track(string $trackingNumber, string $locale = 'fr'): Tracking;
 
     /** @return PickupPoint[] nearest first */
     public function pickupPoints(Address $near, int $limit = 10, ?Parcel $parcel = null): array;
 
+    /** @param string $trackingNumber the label's tracking number, or its carrierReference when it has one */
     public function slip(string $trackingNumber, string $format = Label::PDF): Label;
 
+    /** @param string $trackingNumber the label's tracking number, or its carrierReference when it has one */
     public function cancel(string $trackingNumber): bool;
 }

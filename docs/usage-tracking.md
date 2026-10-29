@@ -44,10 +44,15 @@ if ($tracking->status->isFinal()) {
   statuses.
 
 > [!WARNING]
-> Known defect: GLS, DTDC and Blue Dart look for "delivered" in an event's text before they look
-> for "not delivered" or "undelivered", so a failed delivery is read `DELIVERED` (Blue Dart only
-> when the scan type is not `UD`). Aramex reads "collected from shipper" as
-> `AVAILABLE_FOR_PICKUP`. Their manuals give the mapping as it is.
+> Known defect: Aramex reads "collected from shipper" as `AVAILABLE_FOR_PICKUP`. Its manual gives
+> the mapping as it is.
+
+A carrier that reads its events' texts looks for the negative ones ("not delivered",
+"undelivered") before "delivered", which they contain: a failed delivery is an `EXCEPTION`.
+
+When the label carried a `carrierReference` (Amazon), pass it in place of the tracking number:
+it tells the carrier which of its carriers to ask. The tracking's `trackingNumber` is still the
+parcel's.
 
 A tracking number the carrier does not know is, depending on the carrier, an empty tracking with
 status `UNKNOWN` or a `CarrierException` carrying the carrier's error code: check each carrier's

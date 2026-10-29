@@ -33,7 +33,12 @@ $label = $gateway->ship($shipment);
 
 $order->setTrackingNumber($label->trackingNumber);
 $order->setTrackingUrl($label->trackingUrl);
+$order->setCarrierReference($label->carrierReference); // null for most carriers
 ```
+
+Keep `carrierReference` when the label has one (Amazon, SF Express): those carriers' later
+requests need more than the tracking number, and `track()`, `slip()` and `cancel()` take it in
+place of the tracking number.
 
 Give the recipient's phone and e-mail where you have them: the carriers that take them send them
 on, for the delivery notices. Each carrier's manual lists what it sends, what it cuts (names of 35
