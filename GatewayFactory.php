@@ -5,6 +5,7 @@ namespace Omnibus;
 use Omnibus\Action\ActionInterface;
 use Omnibus\Action\ApiAwareInterface;
 use Omnibus\Action\ConfiguredRatingAction;
+use Omnibus\Http\Redaction;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
@@ -29,36 +30,41 @@ abstract class GatewayFactory implements GatewayFactoryInterface
 
     public function create(array $options = []): GatewayInterface
     {
-        $config = $this->createConfig($options);
-        $config->validateNotEmpty($config->get('omnibus.required_options', []));
+        try {
+            $config = $this->createConfig($options);
+            $config->validateNotEmpty($config->get('omnibus.required_options', []));
 
-        $api = $config->get('omnibus.api');
-        if ($api instanceof \Closure) {
-            $api = $api($config);
-        }
+            $api = $config->get('omnibus.api');
+            if ($api instanceof \Closure) {
+                $api = $api($config);
+            }
 
-        $actions = [];
-        foreach ($config as $key => $action) {
-            if (!str_starts_with((string) $key, 'omnibus.action.')) {
-                continue;
+            $actions = [];
+            foreach ($config as $key => $action) {
+                if (!str_starts_with((string) $key, 'omnibus.action.')) {
+                    continue;
+                }
+                if ($action instanceof \Closure) {
+                    $action = $action($config);
+                }
+                if (!$action instanceof ActionInterface) {
+                    continue;
+                }
+                if ($action instanceof ApiAwareInterface && null !== $api) {
+                    $action->setApi($api);
+                }
+                $actions[] = $action;
             }
-            if ($action instanceof \Closure) {
-                $action = $action($config);
+            // Configured prices last: a carrier's rating API answers first.
+            if ($config->get('rates')) {
+                $actions[] = new ConfiguredRatingAction($config['omnibus.factory_name'], $config['rates']);
             }
-            if (!$action instanceof ActionInterface) {
-                continue;
-            }
-            if ($action instanceof ApiAwareInterface && null !== $api) {
-                $action->setApi($api);
-            }
-            $actions[] = $action;
-        }
-        // Configured prices last: a carrier's rating API answers first.
-        if ($config->get('rates')) {
-            $actions[] = new ConfiguredRatingAction($config['omnibus.factory_name'], $config['rates']);
-        }
 
-        return new Gateway($config['omnibus.factory_name'], $config['omnibus.factory_title'], $actions);
+            return new Gateway($config['omnibus.factory_name'], $config['omnibus.factory_title'], $actions);
+        } catch (\Throwable $e) {
+            // The options hold the credentials: no trace of the failure keeps them in its arguments.
+            throw Redaction::withoutArguments($e);
+        }
     }
 
     public function createConfig(array $options = []): Config

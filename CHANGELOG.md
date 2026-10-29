@@ -18,3 +18,8 @@
 ### Changed
 - `Request\Paperless`'s docblock says what the manual says: part of the contract and of the
   conformance suite, answered by no carrier package yet.
+
+### Fixed
+- `GatewayFactory::create()` throws what fails without arguments in its trace: with
+  `zend.exception_ignore_args` off, an `InvalidConfigException` (a missing option) kept the
+  options given, credentials included, in the arguments of `create()`.
