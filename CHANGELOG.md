@@ -9,3 +9,7 @@
   and null by default: an application keeps it with the order and passes it to `track()`,
   `slip()` and `cancel()` in place of the tracking number. A trailing optional constructor
   argument: labels built without it are unchanged.
+
+### Changed
+- `Request\Paperless`'s docblock says what the manual says: part of the contract and of the
+  conformance suite, answered by no carrier package yet.
