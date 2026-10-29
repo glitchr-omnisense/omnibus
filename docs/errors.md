@@ -27,7 +27,7 @@ try {
     $e->carrier;        // the gateway's name: "ups", "mondial_relay"
     $e->carrierCode;    // the carrier's own error code, when it gave one; else null
     $e->getMessage();   // "[ups] <the carrier's message>"
-    $e->getPrevious();  // the HTTP client's exception, the JSON error... when there was one
+    $e->getPrevious();  // a copy of the HTTP client's exception, the JSON error... when there was one
 }
 ```
 
@@ -45,6 +45,17 @@ carrier keeps and the conformance suite checks on each operation that calls the 
 Never an HTTP client's own exception, never a `\TypeError` from an unexpected shape, and never an
 empty answer in place of the failure: no rates because the carrier is down is an exception, not
 `[]`.
+
+## No secret in a failure
+
+What a carrier throws keeps the request's secrets out, for a log that writes the whole chain,
+arguments included (`zend.exception_ignore_args` off). The HTTP client's message quotes the URL
+called: in the `CarrierException`'s message its key parameters, a password in its user part and every secret
+of the request (a key, a password, a bearer or basic credential) are masked as `***`
+(`Omnibus\Http\Redaction::text()`). The previous exception is a copy of the client's
+(`Redaction::copy()`: the same class and code, that message, its own previous copied the same
+way, without the response or request a client's exception holds), and no trace of the chain keeps
+its arguments, where the options, headers and body stood (`Redaction::withoutArguments()`).
 
 ## What to catch where
 
