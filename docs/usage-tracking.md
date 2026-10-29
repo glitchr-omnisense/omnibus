@@ -43,10 +43,6 @@ if ($tracking->status->isFinal()) {
 - `TrackingEvent::$code` keeps the carrier's own event code, for whoever needs more than the eight
   statuses.
 
-> [!WARNING]
-> Known defect: Aramex reads "collected from shipper" as `AVAILABLE_FOR_PICKUP`. Its manual gives
-> the mapping as it is.
-
 A carrier that reads its events' texts looks for the negative ones ("not delivered",
 "undelivered") before "delivered", which they contain: a failed delivery is an `EXCEPTION`.
 
