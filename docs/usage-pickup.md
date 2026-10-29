@@ -45,12 +45,10 @@ hours by ISO weekday as `"HH:MM"` pairs - is checked by the conformance suite on
 Carriers differ in how far they search and in what they know: some give no distance, some no
 opening hours. Each carrier's manual says what its search sends and what comes back.
 
-> [!WARNING]
-> Known defects: Canada Post's points never carry opening hours (they are not read); USPS assigns
-> hours by their position in the answer (Monday first assumed) and keeps an empty `['', '']` slot
-> for a day without hours; Aramex's offices have no distance and come with the searched city first,
-> not nearest first; UPS passes its `Day` numbers and hours on unchecked (whether they are ISO
-> weekdays and `HH:MM` is not verified).
+Carriers that number the days otherwise (UPS and Canada Post count from Sunday) or write their
+times otherwise (UPS's military `930`) are converted; Canada Post's hours cost one call per office.
+Aramex gives no distance and no order: its offices come by postcode, city, then distance to the
+city's offices, with `distance` null.
 
 ## Click and collect
 

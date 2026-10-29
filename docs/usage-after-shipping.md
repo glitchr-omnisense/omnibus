@@ -16,8 +16,9 @@ if ($gateway->supports(GetSlip::class)) {
 }
 ```
 
-`slip()` asks the carrier for the label of a shipment booked earlier. Only Mondial Relay answers it
-today; for every other carrier, keep the document `ship()` returned (`Label::$content`, or download
+`slip()` asks the carrier for the label of a shipment booked earlier. Mondial Relay, Australia
+Post, Canpar and DTDC answer it (the last three for a label that did not come at booking); for
+every other carrier, keep the document `ship()` returned (`Label::$content`, or download
 `Label::$url` while it is valid).
 
 ## Cancelling a shipment

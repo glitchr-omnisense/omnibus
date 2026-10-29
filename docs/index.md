@@ -65,11 +65,11 @@ request is supported only once option X is set.
 | [`omnibus/royal-mail`](https://github.com/glitchr-omnisense/omnibus-royal-mail) | `royal_mail` | configured | yes | with `tracking_client_id` and `tracking_client_secret` | - | - | - |
 | [`omnibus/canada-post`](https://github.com/glitchr-omnisense/omnibus-canada-post) | `canada_post` | yes | yes | yes | yes | - | - |
 | [`omnibus/purolator`](https://github.com/glitchr-omnisense/omnibus-purolator) | `purolator` | yes | yes | yes | yes | - | yes |
-| [`omnibus/canpar`](https://github.com/glitchr-omnisense/omnibus-canpar) | `canpar` | yes | yes | yes | - | - | yes |
-| [`omnibus/auspost`](https://github.com/glitchr-omnisense/omnibus-auspost) | `auspost` | yes | yes | yes | - | - | yes |
+| [`omnibus/canpar`](https://github.com/glitchr-omnisense/omnibus-canpar) | `canpar` | yes | yes | yes | - | yes | yes |
+| [`omnibus/auspost`](https://github.com/glitchr-omnisense/omnibus-auspost) | `auspost` | yes | yes | yes | - | yes | yes |
 | [`omnibus/aramex`](https://github.com/glitchr-omnisense/omnibus-aramex) | `aramex` | yes | yes | yes | yes | - | - |
 | [`omnibus/bluedart`](https://github.com/glitchr-omnisense/omnibus-bluedart) | `bluedart` | yes | yes | yes | - | - | yes |
-| [`omnibus/dtdc`](https://github.com/glitchr-omnisense/omnibus-dtdc) | `dtdc` | configured | yes | with `tracking_username` and `tracking_password` | - | - | yes |
+| [`omnibus/dtdc`](https://github.com/glitchr-omnisense/omnibus-dtdc) | `dtdc` | configured | yes | with `tracking_username` and `tracking_password` | - | yes | yes |
 | [`omnibus/sf-express`](https://github.com/glitchr-omnisense/omnibus-sf-express) | `sf_express` | configured | yes | yes | - | - | yes |
 | [`omnibus/jdl-express`](https://github.com/glitchr-omnisense/omnibus-jdl-express) | `jdl_express` | configured | yes | yes | - | - | yes |
 | [`omnibus/zto-express`](https://github.com/glitchr-omnisense/omnibus-zto-express) | `zto_express` | configured | yes | yes | - | - | yes |

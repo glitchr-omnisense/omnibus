@@ -38,9 +38,10 @@ The core's own tests cover the gateway, the registry, configured rates, the Symf
   read from documentation only, and flagged "unverified" in their READMEs and manuals.
 - Colissimo's web services are not wired: `omnibus/colissimo` answers configured rates only.
 - The conformance suite checks the shapes the code returns, not the meaning of each carrier's
-  fields: the known defects found while writing these manuals (a status mapping that reads
-  "not delivered" as delivered, a pickup point id never sent, a cancellation with the wrong id,
-  opening hours not read) are flagged in the carriers' manuals and in the pages above.
+  fields. The defects found while writing these manuals (a status mapping that read "not
+  delivered" as delivered, a pickup point id never sent, a cancellation with the wrong id, opening
+  hours not read...) were fixed against the carriers' published documentation; what a live answer
+  must still confirm is said in each carrier's manual.
 - The [Laravel](laravel.md) page was written from the registry's API, not run in a Laravel
   application.
 
