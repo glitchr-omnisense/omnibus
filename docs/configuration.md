@@ -71,10 +71,10 @@ Each carrier's manual explains its options; the table lists them as each factory
 | `mondial_relay` | `enseigne`, `private_key` | `sandbox` (fills the test brand), `endpoint` (`https://api.mondialrelay.com/Web_Services.asmx`), `collection` (`CCC`), `download_labels` (false) |
 | `colissimo` | - | - |
 | `chronopost` | `account_number`, `password` | `sub_account` (null) |
-| `ups` | `client_id`, `client_secret`, `account_number` | `sandbox` (false), `shipper` (null, never read) |
+| `ups` | `client_id`, `client_secret`, `account_number` | `sandbox` (false) |
 | `fedex` | `client_id`, `client_secret`, `account_number` | `sandbox` (false) |
 | `dhl` | `api_key`, `api_secret`, `account_number` | `sandbox` (false), `location_api_key` (null: no pickup points) |
-| `tnt` | `username`, `password`, `account_number` | - |
+| `tnt` | `username`, `password`, `account_number` | `sender` (null: the shipment's sender is the collection address) |
 | `gls` | `username`, `password`, `contact_id` | `sandbox` (false) |
 | `db_schenker` | - | `api_key`, `account_number` (null: tracking only) |
 | `usps` | `client_id`, `client_secret` | `sandbox` (false), `crid`, `mid`, `account` (null: no labels) |
