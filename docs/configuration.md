@@ -89,7 +89,7 @@ Each carrier's manual explains its options; the table lists them as each factory
 | `sf_express` | `partner_id`, `checkword` | `monthly_card` (null), `sandbox` (false) |
 | `jdl_express` | `app_key`, `app_secret`, `access_token`, `customer_code` | `sandbox` (false) |
 | `zto_express` | `company_id`, `key` | `partner_code` (null), `sandbox` (false) |
-| `amazon` | `client_id`, `client_secret`, `refresh_token` | `region` (`eu`), `business_id` (null), `sandbox` (false) |
+| `amazon` | `client_id`, `client_secret`, `refresh_token` | `region` (`eu`), `business_id` (null), `carrier_id` (`AMZN_UK`: the carrier a bare tracking number is tracked with), `sandbox` (false) |
 
 Besides these, each carrier reads shipment options (`Shipment::$options`: `label_format`,
 `description`, `instructions`, Blue Dart's `prices`...): its manual lists every option its code

@@ -202,6 +202,7 @@ The shipping label (or slip) a carrier issued.
 | `format` | `string` | `Label::PDF` | its media type: `Label::PDF` (`application/pdf`), `Label::ZPL` (`application/zpl`), or another one a carrier gives (`image/gif` for UPS) |
 | `url` | `?string` | `null` | where to download the document, when the carrier hands out a link instead |
 | `trackingUrl` | `?string` | `null` | the carrier's public tracking page for this parcel |
+| `carrierReference` | `?string` | `null` | the carrier's own handle on the booking, when its later requests need more than the tracking number (Amazon, SF Express); opaque: keep it and pass it to `track()`, `slip()` and `cancel()` in place of the tracking number |
 
 A label may have neither `content` nor `url`: `omnibus/offline` prints nothing, ZTO's electronic
 waybill is printed by its own client.

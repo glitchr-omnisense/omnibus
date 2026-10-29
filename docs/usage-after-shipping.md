@@ -25,7 +25,7 @@ today; for every other carrier, keep the document `ship()` returned (`Label::$co
 ```php
 use Omnibus\Request\Cancel;
 
-if ($gateway->supports(Cancel::class) && $gateway->cancel($label->trackingNumber)) {
+if ($gateway->supports(Cancel::class) && $gateway->cancel($label->carrierReference ?? $label->trackingNumber)) {
     // voided: the carrier will not invoice it
 }
 ```
@@ -36,11 +36,8 @@ says so is in its manual - Amazon answers `true` whenever the call succeeds). Ch
 GLS, Purolator, Canpar, Australia Post, Blue Dart, DTDC, SF Express, JD Logistics, ZTO and Amazon
 answer it.
 
-> [!WARNING]
-> Known defect: SF Express cancels with the waybill number as the order id, while the order was
-> created under the shipment's reference or a random id; Amazon's `cancel()` needs the shipment id,
-> which the `Label` does not keep (it carries the package's tracking id). Neither cancellation
-> can reach the shipment as written; see those carriers' manuals.
+Amazon cancels by its shipment id and SF Express by its order id, not by the tracking number: both
+put what they need in the label's `carrierReference`, which `cancel()` takes.
 
 ## Customs documents
 
