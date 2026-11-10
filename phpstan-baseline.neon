@@ -1,0 +1,415 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Trait Omnibus\\Action\\ApiAwareTrait is used zero times and is not analysed\.$#'
+			identifier: trait.unused
+			count: 1
+			path: Action/ApiAwareTrait.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 1
+			path: Action/ConfiguredRatingAction.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 3
+			path: Action/ConfiguredRatingAction.php
+
+		-
+			message: '#^Parameter \#1 \$array of function ksort expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Action/ConfiguredRatingAction.php
+
+		-
+			message: '#^Parameter \#1 \$bands of static method Omnibus\\Action\\ConfiguredRatingAction\:\:band\(\) expects array\<int\|string, int\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Action/ConfiguredRatingAction.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, ''strtoupper'' given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Action/ConfiguredRatingAction.php
+
+		-
+			message: '#^Parameter \#2 \$array of function array_map expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Action/ConfiguredRatingAction.php
+
+		-
+			message: '#^Call to function is_subclass_of\(\) with ''Omnibus\\\\Amazon\\\\AmazonGatewayFactory''\|''Omnibus\\\\Aramex\\\\AramexGatewayFactory''\|''Omnibus\\\\Auspost\\\\AuspostGatewayFactory''\|''Omnibus\\\\Bluedart\\\\BluedartGatewayFactory''\|''Omnibus\\\\CanadaPost\\\\CanadaPostGatewayFactory''\|''Omnibus\\\\Canpar\\\\CanparGatewayFactory''\|''Omnibus\\\\Chronopost\\\\ChronopostGatewayFactory''\|''Omnibus\\\\Colissimo\\\\ColissimoGatewayFactory''\|''Omnibus\\\\DbSchenker\\\\DbSchenkerGatewayFactory''\|''Omnibus\\\\Dhl\\\\DhlGatewayFactory''\|''Omnibus\\\\Dtdc\\\\DtdcGatewayFactory''\|''Omnibus\\\\Fedex\\\\FedexGatewayFactory''\|''Omnibus\\\\Gls\\\\GlsGatewayFactory''\|''Omnibus\\\\JdlExpress\\\\JdlExpressGatewayFactory''\|''Omnibus\\\\MondialRelay\\\\MondialRelayGatewayFactory''\|''Omnibus\\\\Offline\\\\OfflineGatewayFactory''\|''Omnibus\\\\Purolator\\\\PurolatorGatewayFactory''\|''Omnibus\\\\RoyalMail\\\\RoyalMailGatewayFactory''\|''Omnibus\\\\SfExpress\\\\SfExpressGatewayFactory''\|''Omnibus\\\\Tnt\\\\TntGatewayFactory''\|''Omnibus\\\\Ups\\\\UpsGatewayFactory''\|''Omnibus\\\\Usps\\\\UspsGatewayFactory''\|''Omnibus\\\\ZtoExpress\\\\ZtoExpressGatewayFactory'' and ''Omnibus\\\\GatewayFactoryInterface'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: Bridge/Symfony/OmnibusBundle.php
+
+		-
+			message: '#^Method Omnibus\\Gateway\:\:ship\(\) should return Omnibus\\Model\\Label but returns Omnibus\\Model\\Label\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: Gateway.php
+
+		-
+			message: '#^Method Omnibus\\Gateway\:\:slip\(\) should return Omnibus\\Model\\Label but returns Omnibus\\Model\\Label\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: Gateway.php
+
+		-
+			message: '#^Method Omnibus\\Gateway\:\:track\(\) should return Omnibus\\Model\\Tracking but returns Omnibus\\Model\\Tracking\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: Gateway.php
+
+		-
+			message: '#^Parameter \#2 \$rates of class Omnibus\\Action\\ConfiguredRatingAction constructor expects list\<array\<string, mixed\>\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: GatewayFactory.php
+
+		-
+			message: '#^Method Omnibus\\Request\\GetSlip\:\:getLabel\(\) should return Omnibus\\Model\\Label\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: Request/GetSlip.php
+
+		-
+			message: '#^Method Omnibus\\Request\\Pickup\:\:getPoints\(\) should return array\<Omnibus\\Model\\PickupPoint\> but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: Request/Pickup.php
+
+		-
+			message: '#^Method Omnibus\\Request\\Rating\:\:getRates\(\) should return array\<Omnibus\\Model\\Rate\> but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: Request/Rating.php
+
+		-
+			message: '#^Method Omnibus\\Request\\Shipping\:\:getLabel\(\) should return Omnibus\\Model\\Label\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: Request/Shipping.php
+
+		-
+			message: '#^Method Omnibus\\Request\\Tracking\:\:getTracking\(\) should return Omnibus\\Model\\Tracking\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: Request/Tracking.php
+
+		-
+			message: '#^Offset 0 on array\{string, string\} on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.offset
+			count: 1
+			path: Testing/GatewayContractTests.php
+
+		-
+			message: '#^Offset 1 on array\{string, string\} on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.offset
+			count: 1
+			path: Testing/GatewayContractTests.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: Testing/RecordedHttpClient.php
+
+		-
+			message: '#^Method Omnibus\\Testing\\RecordedHttpClient\:\:request\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: Testing/RecordedHttpClient.php
+
+		-
+			message: '#^Method Omnibus\\Testing\\RecordedHttpClient\:\:respond\(\) should return Symfony\\Component\\HttpClient\\Response\\MockResponse but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: Testing/RecordedHttpClient.php
+
+		-
+			message: '#^Method Omnibus\\Testing\\RecordedHttpClient\:\:withOptions\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: Testing/RecordedHttpClient.php
+
+		-
+			message: '#^Parameter \#3 \$options of method Omnibus\\Testing\\RecordedHttpClient\:\:respond\(\) expects array\<string, mixed\>, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Testing/RecordedHttpClient.php
+
+		-
+			message: '#^Cannot access offset ''label'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Tests/BareTest.php
+
+		-
+			message: '#^Cannot access offset ''offline'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Tests/BareTest.php
+
+		-
+			message: '#^Cannot access offset ''pickup_points'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Tests/BareTest.php
+
+		-
+			message: '#^Cannot access offset ''rates'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: Tests/BareTest.php
+
+		-
+			message: '#^Cannot access offset ''ups'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Tests/BareTest.php
+
+		-
+			message: '#^Method Omnibus\\Tests\\BareTest\:\:framework\(\) should return list\<string\> but returns array\<mixed\>\.$#'
+			identifier: return.type
+			count: 1
+			path: Tests/BareTest.php
+
+		-
+			message: '#^Method Omnibus\\Tests\\BareTest\:\:php\(\) should return array\{int, array\<string, mixed\>\} but returns array\{int, array\<mixed\>\}\.$#'
+			identifier: return.type
+			count: 1
+			path: Tests/BareTest.php
+
+		-
+			message: '#^Only iterables can be unpacked, mixed given\.$#'
+			identifier: arrayUnpacking.nonIterable
+			count: 2
+			path: Tests/BareTest.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_column expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Tests/BareTest.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_values expects array, array\|false given\.$#'
+			identifier: argument.type
+			count: 2
+			path: Tests/BareTest.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_values expects array\<T\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Tests/BareTest.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(string\)\: non\-falsy\-string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Tests/BareTest.php
+
+		-
+			message: '#^Parameter \#1 \$report of static method Omnibus\\Tests\\BareTest\:\:framework\(\) expects array\{symbols\: list\<string\>, files\: list\<string\>\}, array\<string, mixed\> given\.$#'
+			identifier: argument.type
+			count: 3
+			path: Tests/BareTest.php
+
+		-
+			message: '#^Parameter \#1 \$report of static method Omnibus\\Tests\\BareTest\:\:framework\(\) expects array\{symbols\: list\<string\>, files\: list\<string\>\}, non\-empty\-array\<string, mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Tests/BareTest.php
+
+		-
+			message: '#^Parameter \#2 \$haystack of static method PHPUnit\\Framework\\Assert\:\:assertContains\(\) expects iterable, mixed given\.$#'
+			identifier: argument.type
+			count: 3
+			path: Tests/BareTest.php
+
+		-
+			message: '#^Parameter \#2 \$haystack of static method PHPUnit\\Framework\\Assert\:\:assertCount\(\) expects Countable\|iterable, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Tests/BareTest.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$relais\.$#'
+			identifier: property.notFound
+			count: 1
+			path: Tests/Bridge/OmnibusBundleTest.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$retrait\.$#'
+			identifier: property.notFound
+			count: 1
+			path: Tests/Bridge/OmnibusBundleTest.php
+
+		-
+			message: '#^Call to an undefined method object\:\:all\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: Tests/Bridge/OmnibusBundleTest.php
+
+		-
+			message: '#^Call to an undefined method object\:\:get\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: Tests/Bridge/OmnibusBundleTest.php
+
+		-
+			message: '#^Cannot call method getName\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 3
+			path: Tests/Bridge/OmnibusBundleTest.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_keys expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Tests/Bridge/OmnibusBundleTest.php
+
+		-
+			message: '#^Parameter \#1 \$extension of method Symfony\\Component\\DependencyInjection\\ContainerBuilder\:\:registerExtension\(\) expects Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface, Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Tests/Bridge/OmnibusBundleTest.php
+
+		-
+			message: '#^Access to an undefined property Omnibus\\Request\\Request\:\:\$shipment\.$#'
+			identifier: property.notFound
+			count: 1
+			path: Tests/GatewayTest.php
+
+		-
+			message: '#^Cannot access property \$reference on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: Tests/GatewayTest.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: Tests/GatewayTest.php
+
+		-
+			message: '#^Access to an undefined property Omnibus\\Request\\Request\:\:\$trackingNumber\.$#'
+			identifier: property.notFound
+			count: 1
+			path: Tests/RecordedCarrierContractTest.php
+
+		-
+			message: '#^Binary operation "\." between ''/parcels/'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: Tests/RecordedCarrierContractTest.php
+
+		-
+			message: '#^Cannot access offset ''events'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Tests/RecordedCarrierContractTest.php
+
+		-
+			message: '#^Cannot access offset ''number'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Tests/RecordedCarrierContractTest.php
+
+		-
+			message: '#^Cannot access offset ''rates'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Tests/RecordedCarrierContractTest.php
+
+		-
+			message: '#^Cannot call method request\(\) on Symfony\\Contracts\\HttpClient\\HttpClientInterface\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: Tests/RecordedCarrierContractTest.php
+
+		-
+			message: '#^Method Omnibus\\Tests\\RecordedCarrierContractTest\:\:sessionRoutes\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: Tests/RecordedCarrierContractTest.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(array\)\: Omnibus\\Model\\Rate given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Tests/RecordedCarrierContractTest.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(array\)\: Omnibus\\Model\\TrackingEvent given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Tests/RecordedCarrierContractTest.php
+
+		-
+			message: '#^Parameter \#1 \$datetime of class DateTimeImmutable constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Tests/RecordedCarrierContractTest.php
+
+		-
+			message: '#^Parameter \#1 \$needle of static method PHPUnit\\Framework\\Assert\:\:assertStringContainsString\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Tests/RecordedCarrierContractTest.php
+
+		-
+			message: '#^Parameter \#1 \$string of function ucfirst expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Tests/RecordedCarrierContractTest.php
+
+		-
+			message: '#^Parameter \#2 \$array of function array_map expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: Tests/RecordedCarrierContractTest.php
+
+		-
+			message: '#^Parameter \#2 \$kept of method Omnibus\\Testing\\RecordedHttpClient\:\:failing\(\) expects list\<string\>, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Tests/RecordedCarrierContractTest.php
+
+		-
+			message: '#^Parameter \#2 \$service of class Omnibus\\Model\\Rate constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Tests/RecordedCarrierContractTest.php
+
+		-
+			message: '#^Parameter \#2 \$trackingNumber of class Omnibus\\Model\\Tracking constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Tests/RecordedCarrierContractTest.php
+
+		-
+			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: Tests/RecordedCarrierContractTest.php
+
+		-
+			message: '#^Parameter \#4 \$amount of class Omnibus\\Model\\Rate constructor expects int, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Tests/RecordedCarrierContractTest.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: offsetAccess.invalidOffset
+			count: 1
+			path: Tests/RecordedCarrierContractTest.php

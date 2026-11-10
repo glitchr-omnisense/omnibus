@@ -10,12 +10,16 @@ use Omnibus\Model\Rate;
 use Omnibus\Model\Shipment;
 use Omnibus\Model\Tracking;
 use Omnibus\Request\Request;
+use Omnisense\Contracts\Provider\ProviderInterface;
 
 /**
  * One carrier, configured: the same questions for all of them. Each typed
  * method is a shortcut for execute() with its request.
+ *
+ * It is an omnisense/contracts provider: capabilities() lists the operations
+ * it supports and the carrier's usage policy (Capabilities).
  */
-interface GatewayInterface
+interface GatewayInterface extends ProviderInterface
 {
     public function getName(): string;
 
@@ -23,6 +27,9 @@ interface GatewayInterface
 
     /** @param class-string<Request> $request */
     public function supports(string $request): bool;
+
+    /** The operations it supports, and the carrier's usage policy. */
+    public function capabilities(): Capabilities;
 
     /**
      * @template T of Request

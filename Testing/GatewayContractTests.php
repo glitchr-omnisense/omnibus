@@ -4,7 +4,10 @@ namespace Omnibus\Testing;
 
 use Omnibus\Exception\CarrierException;
 use Omnibus\Exception\InvalidConfigException;
+use Omnibus\Exception\RateLimitedException;
 use Omnibus\Exception\RequestNotSupportedException;
+use Omnibus\Exception\UsageLimitReachedException;
+use Omnibus\Gateway;
 use Omnibus\GatewayFactory;
 use Omnibus\GatewayFactoryInterface;
 use Omnibus\GatewayInterface;
@@ -18,6 +21,7 @@ use Omnibus\Model\TrackingEvent;
 use Omnibus\Model\TrackingStatus;
 use Omnibus\Registry;
 use Omnibus\Request;
+use Omnisense\Contracts\Policy\PolicyExport;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
@@ -42,7 +46,14 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  * - every failure of the carrier - HTTP 401, 403, 404, 429, 500 and 503, a
  *   network error, a body it cannot read, a login refused - is a
  *   CarrierException naming the carrier, never an HTTP client's exception, a
- *   TypeError, or an answer made of nothing.
+ *   TypeError, or an answer made of nothing;
+ * - the carrier's usage policy is declared as data (policy.json, named in its
+ *   composer.json's extra.omnisense.policy) and is the gateway's;
+ * - a 429 is a RateLimitedException sent once, never retried, and holds the
+ *   carrier's next calls unsent while its Retry-After lasts - so a label is
+ *   never bought twice by Omnibus;
+ * - a guarded gateway (Registry::guarded()) over the site's limit refuses the
+ *   call before anything is sent.
  *
  *   final class UpsContractTest extends TestCase
  *   {
@@ -57,6 +68,8 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  * The hooks below (shipment, tracking number, documents...) have defaults a
  * carrier overrides where it legitimately differs. Requires phpunit/phpunit
  * (the carrier's, in require-dev) and symfony/http-client.
+ *
+ * @suggested phpunit/phpunit (test support: loaded by a carrier's tests only, with symfony/http-client)
  */
 trait GatewayContractTests
 {
@@ -274,6 +287,133 @@ trait GatewayContractTests
         self::assertSame([], $violations, 'every failure of the carrier is a CarrierException naming it');
     }
 
+    // ---- the usage policy ----------------------------------------------------
+
+    public function testTheUsagePolicyIsDeclaredAsData(): void
+    {
+        $factory = $this->gatewayFactory(new RecordedHttpClient($this->recordedAnswers()));
+        $package = self::packageOf($factory);
+        $declared = null !== $package ? (new PolicyExport())->folders($package)->entries() : [];
+        if ([] === $declared) {
+            self::markTestSkipped('This factory\'s package declares no policy (extra.omnisense.policy).');
+        }
+
+        self::assertCount(1, $declared, 'one policy, named in composer.json\'s extra.omnisense.policy');
+        self::assertArrayNotHasKey('error', $declared[0], 'it reads as omnisense/contracts\' schema says: '.json_encode($declared[0]['error'] ?? null));
+        $gateway = $factory->create($this->gatewayOptions());
+        $policy = $gateway->capabilities()->policy();
+        self::assertSame($gateway->getName(), $policy->provider, 'the policy names the gateway\'s carrier');
+        $registry = new Registry([$factory], ['carrier' => ['factory' => $factory->getName(), 'options' => $this->gatewayOptions()]]);
+        self::assertEquals($policy->forPlan(null), $registry->policy('carrier'), 'the registry runs it as declared, under its default plan');
+    }
+
+    public function testA429IsSentOnceNeverRetriedAndHoldsTheNextCalls(): void
+    {
+        $this->skipUnlessAPolicyIsDeclared();
+        $recorded = new RecordedHttpClient($this->recordedAnswers());
+        $tooMany = RecordedHttpClient::answer(['error' => 'recorded 429', 'message' => 'recorded 429'], 429, ['retry-after' => '30']);
+        $checked = 0;
+        $violations = [];
+        foreach ($this->contractOperations() as $request => $operation) {
+            $probe = new RecordedHttpClient($this->recordedAnswers());
+            $gateway = $this->gatewayFactory($probe)->create($this->gatewayOptions());
+            if (!$gateway->supports($request)) {
+                continue;
+            }
+            try {
+                $operation($gateway);
+            } catch (CarrierException) {
+            }
+            if (!$probe->requests()) {
+                continue; // answered without calling the carrier
+            }
+            ++$checked;
+            $short = (new \ReflectionClass($request))->getShortName();
+            $http = $recorded->failing($tooMany, $this->sessionRouteList());
+            $gateway = $this->gatewayFactory($http)->create($this->gatewayOptions());
+            try {
+                $operation($gateway);
+                $violations[] = $short.': answered a 429';
+                continue;
+            } catch (RateLimitedException $e) {
+                if (30 !== $e->retryAfter || $e->carrier !== $gateway->getName()) {
+                    $violations[] = \sprintf('%s: a RateLimitedException of "%s" waiting %s, not 30 s', $short, $e->carrier, var_export($e->retryAfter, true));
+                }
+            } catch (UsageLimitReachedException) {
+                // An operation that goes on after a refused call (a rating per service) is held at its next one.
+            } catch (\Throwable $e) {
+                $violations[] = \sprintf('%s: %s (%s), not a RateLimitedException', $short, $e::class, $e->getMessage());
+                continue;
+            }
+            $refused = array_values(array_filter($http->requests(), fn (array $r): bool => !$this->isSessionRoute($r)));
+            if (1 !== \count($refused)) {
+                $violations[] = \sprintf('%s: %d requests sent to the carrier, not one (nothing retried)', $short, \count($refused));
+            }
+            $sent = \count($http->requests());
+            try {
+                $operation($gateway);
+                $violations[] = $short.': called again while the wait lasts';
+            } catch (UsageLimitReachedException $e) {
+                if (null === $e->retryAfter || $e->retryAfter <= 0) {
+                    $violations[] = $short.': held without saying how long';
+                }
+            } catch (\Throwable $e) {
+                $violations[] = \sprintf('%s held: %s (%s), not a UsageLimitReachedException', $short, $e::class, $e->getMessage());
+            }
+            if (\count($http->requests()) !== $sent) {
+                $violations[] = $short.': a request went out while the wait lasted';
+            }
+        }
+        if (!$checked) {
+            self::markTestSkipped('This gateway calls no carrier: no 429 to honour.');
+        }
+
+        self::assertSame([], $violations, 'a 429 is surfaced once and holds the carrier\'s next calls unsent');
+    }
+
+    public function testAGuardedGatewayOverTheSitesLimitSendsNothing(): void
+    {
+        $this->skipUnlessAPolicyIsDeclared();
+        foreach ($this->contractOperations() as $request => $operation) {
+            $probe = new RecordedHttpClient($this->recordedAnswers());
+            $gateway = $this->gatewayFactory($probe)->create($this->gatewayOptions());
+            if (!$gateway->supports($request)) {
+                continue;
+            }
+            try {
+                $operation($gateway);
+            } catch (CarrierException) {
+                continue;
+            }
+            if (!$probe->requests()) {
+                continue;
+            }
+            $http = new RecordedHttpClient($this->recordedAnswers());
+            $factory = $this->gatewayFactory($http);
+            $name = Gateway::OPERATIONS[$request];
+            $registry = new Registry([$factory], ['carrier' => [
+                'factory' => $factory->getName(),
+                'options' => $this->gatewayOptions(),
+                'policy' => ['rateLimits' => [['max' => 1, 'window' => 'hour', 'operations' => [$name]]]],
+            ]]);
+            $guarded = $registry->guarded('carrier');
+            $operation($guarded);
+            $sent = \count($http->requests());
+            try {
+                $operation($guarded);
+                self::fail(\sprintf('a second %s within the hour the site allows one', $name));
+            } catch (UsageLimitReachedException $e) {
+                self::assertGreaterThan(0, $e->retryAfter);
+            }
+            self::assertCount($sent, $http->requests(), 'refused before anything was sent');
+            self::assertNotSame($guarded, $registry->get('carrier'), 'get() gives the gateway unguarded');
+
+            return;
+        }
+
+        self::markTestSkipped('This gateway calls no carrier: no limit to count.');
+    }
+
     // ---- the machinery ------------------------------------------------------
 
     /** @return array<class-string<Request\Request>, \Closure(GatewayInterface): mixed> */
@@ -407,5 +547,56 @@ trait GatewayContractTests
                 $previous = $point->distance;
             }
         }
+    }
+
+    /**
+     * Whether a request is one of sessionRoutes() (a login, a token): "METHOD fragment" or
+     * "fragment", the fragment in its URL or, as "body:fragment", in its body.
+     *
+     * @param array{method: string, url: string, options: array<string, mixed>} $request
+     */
+    private function isSessionRoute(array $request): bool
+    {
+        $body = \is_string($request['options']['body'] ?? null) ? $request['options']['body'] : '';
+        foreach ($this->sessionRouteList() as $route) {
+            $verb = null;
+            $fragment = $route;
+            if (preg_match('~^([A-Z]+) (.+)$~', $route, $m)) {
+                [, $verb, $fragment] = $m;
+            }
+            $matches = str_starts_with($fragment, 'body:') ? str_contains($body, substr($fragment, 5)) : str_contains($request['url'], $fragment);
+            if ((null === $verb || $verb === strtoupper($request['method'])) && $matches) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /** @return list<string> sessionRoutes(), as a list of texts */
+    private function sessionRouteList(): array
+    {
+        return array_values(array_filter($this->sessionRoutes(), 'is_string'));
+    }
+
+    private function skipUnlessAPolicyIsDeclared(): void
+    {
+        $package = self::packageOf($this->gatewayFactory(new RecordedHttpClient($this->recordedAnswers())));
+        if (null === $package || [] === (new PolicyExport())->folders($package)->entries()) {
+            self::markTestSkipped('This factory\'s package declares no usage policy: its API client is not on omnisense/contracts yet.');
+        }
+    }
+
+    /** The folder of the package the factory's class belongs to: the nearest composer.json above it. */
+    private static function packageOf(object $factory): ?string
+    {
+        $dir = \dirname((string) (new \ReflectionClass($factory))->getFileName());
+        for ($i = 0; $i < 4 && \strlen($dir) > 1; ++$i, $dir = \dirname($dir)) {
+            if (is_file($dir.'/composer.json')) {
+                return $dir;
+            }
+        }
+
+        return null;
     }
 }

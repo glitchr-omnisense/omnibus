@@ -33,6 +33,8 @@ use Symfony\Contracts\HttpClient\ResponseStreamInterface;
  * routes kept (a login, say), for checking how a carrier reports its errors.
  *
  * Requires symfony/http-client (a carrier calling an API has it already).
+ *
+ * @suggested symfony/http-client (test support: a carrier's tests, over its MockHttpClient)
  */
 final class RecordedHttpClient implements HttpClientInterface
 {

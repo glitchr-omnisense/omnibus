@@ -7,7 +7,9 @@ order: 70
 
 `docker/` runs this package with every `omnibus/*` carrier installed - from GitHub (branch 2.x),
 or from the checkouts beside this one when `OMNIBUS_PLUGINS=../..` is set in `docker/.env` - and
-a console that exercises them with the test keys in `docker/.env`.
+a console that exercises them with the test keys in `docker/.env`. omnisense/contracts comes from
+GitHub, or from its checkout when `OMNISENSE_CONTRACTS` names it (`../../../omnisense-contracts`
+beside the family's folder).
 
 ```sh
 cd docker && cp .env.dist .env       # your carriers' test keys, when you have them
@@ -24,7 +26,8 @@ docker compose run --rm omnibus gateways
 | `slip <gateway> <number>` | a label fetched again |
 | `cancel <gateway> <number>` | a shipment cancelled |
 | `bare` | plain PHP: the registry built by hand, a parcel priced and handed over, UPS asked, what PHP loaded |
-| `test` | every package's tests |
+| `test` | every package's tests, omnisense/contracts' with them when its checkout is mounted |
+| `phpstan` | PHPStan at level max on every package with a `phpstan.neon` (its baseline may only shrink) |
 
 ```sh
 docker compose run --rm omnibus rate ups --to-country GB --weight 1200

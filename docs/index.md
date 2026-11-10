@@ -91,7 +91,9 @@ credentials and behaviour.
   [slips, cancellations and customs documents](usage-after-shipping.md).
 - [Configuration reference](configuration.md): the registry's configuration, the `rates` option,
   every carrier's options.
-- [Errors](errors.md): the three exceptions and when each is thrown.
+- [Errors](errors.md): the exceptions and when each is thrown.
+- [Usage policies and rate limits](policies.md): each carrier's terms as data, the guard, a 429,
+  a label never bought twice.
 - [Testing](testing.md): testing an application that ships with Omnibus.
 - [The Docker harness](harness.md): every carrier installed, a console to call them.
 - [Writing a carrier](providers.md), and its conformance suite.

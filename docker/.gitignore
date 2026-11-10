@@ -3,3 +3,5 @@ labels/*
 !labels/.gitkeep
 plugins/*
 !plugins/.gitkeep
+contracts/*
+!contracts/.gitkeep

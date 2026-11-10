@@ -10,19 +10,28 @@
 #
 # Carriers come from GitHub (branch 2.x) unless their checkout sits under
 # OMNIBUS_PLUGINS (set it to ../.. in .env when this core sits in the
-# workspace beside them): then that checkout is what runs.
+# workspace beside them): then that checkout is what runs. omnisense/contracts
+# likewise: its checkout under OMNISENSE_CONTRACTS (../../../omnisense-contracts
+# in .env when it sits beside the family's folder), its tests run with the
+# family's; GitHub otherwise.
+#
+#   docker compose run --rm omnibus phpstan             # PHPStan at level max on every package
 name: omnibus-harness
 
 services:
   omnibus:
     build: .
     image: omnisense/omnibus-harness
+    entrypoint: ["/omnibus/core/docker/entrypoint.sh"]
+    # The default bridge: no network of its own (address pools are scarce).
+    network_mode: bridge
     env_file:
       - path: .env
         required: false
     volumes:
       - ..:/omnibus/core
       - ${OMNIBUS_PLUGINS:-./plugins}:/omnibus/plugins:ro
+      - ${OMNISENSE_CONTRACTS:-./contracts}:/omnisense/contracts:ro
       - ./labels:/harness/labels
       - harness:/harness
 

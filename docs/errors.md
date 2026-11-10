@@ -59,12 +59,22 @@ its arguments, where the options, headers and body stood (`Redaction::withoutArg
 `GatewayFactory::create()` that fails (a missing option) throws without arguments in its trace
 either: they held the options, credentials included.
 
+## Rate limits
+
+A 429 is a `RateLimitedException`, a `CarrierException` with `carrierCode` `rate_limited` and
+`retryAfter` (seconds, when the carrier said). The carrier's next calls are then refused before
+they are sent, while the wait lasts: `UsageLimitReachedException` (`retryAfter`), as they are by
+a guarded gateway over a limit of its usage policy. It is no `CarrierException`: nothing reached
+the carrier. Both are `OmnibusException`s, and omnisense/contracts' `ExceptionInterface` catches
+every exception of the family. Nothing retries a call: see [Usage policies and rate
+limits](policies.md).
+
 ## What to catch where
 
 | Where | Catch |
 |---|---|
 | a checkout showing rates | `CarrierException`: show configured or flat prices, or "unavailable"; log it |
-| booking after payment | `CarrierException`: keep the order, retry later (a 429 or 5xx is often temporary), alert someone on a 401/403 |
+| booking after payment | `CarrierException`: keep the order, retry later (a 429 or 5xx is often temporary; after a 5xx or a timeout, check the carrier made no shipment first), alert someone on a 401/403; `UsageLimitReachedException`: nothing was sent, retry after `retryAfter` |
 | building the registry, a deploy | `InvalidConfigException`: a configuration error, to fix, not to retry |
 | a feature a carrier may lack | check `supports()` first; `RequestNotSupportedException` is a programming error |
 

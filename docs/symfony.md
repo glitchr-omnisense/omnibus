@@ -51,6 +51,14 @@ The whole tree:
 | `omnibus.gateways` | map, keyed by the gateway's name | `{}` | the shop's carriers |
 | `omnibus.gateways.<name>.factory` | string, required, not empty | - | a factory's name: `offline`, `mondial_relay`, `ups`... ([carriers](index.md#carriers)), or an application's own factory's `getName()` |
 | `omnibus.gateways.<name>.options` | any value (a map) | `[]` | handed as they are to the factory's `create()`: the carrier's options ([Configuration](configuration.md)) |
+| `omnibus.gateways.<name>.policy` | a map | - | the site's tightening of the carrier's usage policy, never looser ([policies](policies.md)) |
+| `omnibus.gateways.<name>.usage` | a map | - | what the site is: `{commercial: true, open_source: false, contract: true}` |
+| `omnibus.limiter` | a service id | `null` | an `Omnisense\Contracts\Policy\RateLimiterInterface` shared by the processes; in memory when null |
+
+The bundle is the only class that needs a framework: `symfony/http-kernel`,
+`symfony/dependency-injection` and `symfony/config` are suggested, not required. The
+`http_client` it hands to every factory is kept with its retries off (`Omnibus\Http\NoRetry`):
+`framework.http_client`'s `retry_failed` would send a label's purchase again.
 
 The options are not validated when the container compiles - the tree accepts any value - but
 when the gateway is built: a required option missing or empty is an `InvalidConfigException`

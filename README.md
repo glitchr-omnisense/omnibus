@@ -140,6 +140,7 @@ The manual, in [docs/](docs/index.md):
   [slips, cancellations and customs documents](docs/usage-after-shipping.md)
 - [Configuration reference](docs/configuration.md): the `rates` option, every carrier's options
 - [Errors](docs/errors.md) and [testing](docs/testing.md)
+- [Usage policies and rate limits](docs/policies.md): each carrier's terms as data (omnisense/contracts)
 - [The Docker harness](docs/harness.md)
 - [Writing a carrier](docs/providers.md), and its conformance suite
 - [Verified, and not](docs/verified.md)

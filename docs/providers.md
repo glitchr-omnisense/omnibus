@@ -59,6 +59,16 @@ The rules every carrier keeps:
   currencies, ISO 3166-1 alpha-2 countries; rates cheapest first; pickup points nearest first and no
   more than the limit asked, opening hours `"HH:MM"` by ISO weekday; tracking events oldest first;
   `Cancel` and `Paperless` answer `true` or `false`.
+- **The usage policy is data.** `policy.json` beside the factory, in omnisense/contracts' schema,
+  named in `composer.json` (`"extra": {"omnisense": {"policy": "policy.json"}}`) and in the factory
+  (`'omnibus.policy' => __DIR__.'/policy.json'`). Read the carrier's terms at their source; a limit
+  nobody published is `null`, a contract-only access `commercial: contract`; `verifiedAt` is the
+  day it was read ([Usage policies](policies.md)).
+- **The carrier's waits are honoured, nothing is retried.** The factory passes `$c->backoff()` to
+  the API client, which calls `Http\Throttle::before($backoff)` before each request and
+  `Http\Throttle::after($backoff, '<name>', $status, $response->getHeaders(false))` once the status
+  is known: a 429 is a `RateLimitedException`, the next calls wait. No loop sends a request again;
+  where the carrier offers an idempotency key, the shipment's options carry it.
 
 ## Conformance suite
 
@@ -109,6 +119,9 @@ What it checks, for every carrier:
 | `testRating`, `testShipping`, `testTracking`, `testPickupPoints`, `testSlip`, `testCancellation`, `testPaperless` | supported: answered from the recorded answers, models valid; not supported: `RequestNotSupportedException`, no call |
 | `testConfiguredRatesReplaceTheRatingApi` | with `rates`, the configured price and only it, no call |
 | `testTheCarriersFailuresAreCarrierExceptions` | for each supported operation that calls the carrier: HTTP 401, 403, 404, 429, 500, 503, a network error, an HTML page with a 200, a login refused - a `CarrierException` naming the carrier, never another exception or an answer; skipped for a gateway that calls no carrier |
+| `testTheUsagePolicyIsDeclaredAsData` | `policy.json`, named in `extra.omnisense.policy`, reads as omnisense/contracts' schema says, names the carrier and is the registry's; skipped for a package that declares none |
+| `testA429IsSentOnceNeverRetriedAndHoldsTheNextCalls` | for each supported operation that calls the carrier: a 429 with `Retry-After: 30` is a `RateLimitedException` (or holds the operation's next call), one request sent, and the same operation again sends nothing (`UsageLimitReachedException`); skipped for a package that declares no policy |
+| `testAGuardedGatewayOverTheSitesLimitSendsNothing` | `Registry::guarded()` with a site limit of one an hour: the second call is refused before anything is sent; skipped likewise |
 
 Hooks, where a carrier legitimately differs:
 
