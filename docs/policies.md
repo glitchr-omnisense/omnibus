@@ -86,7 +86,10 @@ asks for:
 - **Nothing retries a call**: neither the guard, the wait, nor the API clients. The HTTP client a
   factory is given is kept with its retries off (`Http\NoRetry`): Symfony's
   `RetryableHttpClient` (`framework.http_client`'s `retry_failed`) would send a label's purchase
-  again on a 429, 502 or 503.
+  again on a 429, 502 or 503. Since omnisense/contracts 1568f2c, `Http\NoRetry` is the kernel's
+  (`Omnisense\Contracts\Http\NoRetry`), which also keeps a `MockHttpClient` under Symfony's
+  decorators from being copied; with an older kernel, omnibus' own code still turns the retries
+  off. A `MockHttpClient` is kept as given either way.
 - **A shipment booked, its label held**: where a carrier books then fetches the label in a second
   call (Canada Post, Royal Mail, Purolator, SF Express, JDL, TNT), a wait that holds the second
   call leaves the label without its document, as a failed fetch did: the booking stands, its

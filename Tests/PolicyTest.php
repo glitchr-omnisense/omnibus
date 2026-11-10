@@ -25,7 +25,9 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
+use Symfony\Component\HttpClient\Retry\GenericRetryStrategy;
 use Symfony\Component\HttpClient\RetryableHttpClient;
+use Symfony\Component\HttpClient\TraceableHttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
@@ -139,6 +141,35 @@ final class PolicyTest extends TestCase
         }
         self::assertCount(1, $this->sent, 'the 503 was not retried by the client');
         self::assertCount(1, $this->answers, 'the second answer was never asked for');
+    }
+
+    /**
+     * As framework.http_client builds it with retry_failed on (TraceableHttpClient over a
+     * RetryableHttpClient), Symfony's default statuses without the wait: a label answered 503
+     * then 200 is bought once, the 503 surfaced.
+     */
+    public function testALabelAnswered503IsSentOnceThroughTheFrameworksRetryingClient(): void
+    {
+        $this->answers = [new MockResponse('{"error":"unavailable"}', ['http_code' => 503]), self::booked()];
+        $retrying = new TraceableHttpClient(new RetryableHttpClient($this->http(), new GenericRetryStrategy(GenericRetryStrategy::DEFAULT_RETRY_STATUS_CODES, 0), 3));
+        $gateway = (new PoliciedFactory($retrying))->create();
+
+        try {
+            $gateway->ship(Fixtures::shipment(500));
+            self::fail('a 503');
+        } catch (CarrierException) {
+        }
+        self::assertCount(1, $this->sent, 'sent once');
+        self::assertCount(1, $this->answers, 'the 200 was never asked for');
+    }
+
+    public function testAMockHttpClientKeepsCountingItsRequests(): void
+    {
+        $mock = new MockHttpClient([self::booked()]);
+        self::assertSame($mock, NoRetry::of($mock));
+
+        (new PoliciedFactory($mock))->create()->ship(Fixtures::shipment(500));
+        self::assertSame(1, $mock->getRequestsCount());
     }
 
     public function testNoRetryKeepsAClientWithoutRetries(): void

@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+### Changed
+- `Http\NoRetry::of()` is omnisense/contracts' `Http\NoRetry::of()` when the kernel has it (from
+  contracts 1568f2c, which brings the shared protection: a `MockHttpClient` under Symfony's
+  decorators is no longer copied); with an older kernel in a site's vendor, omnibus' former code
+  runs, as before. Same name, same signature. `Tests/PolicyTest`: a label answered 503 then 200
+  through Traceable over Retryable sent once, a `MockHttpClient` still counting its requests.
+
 ### Added
 - omnisense/omnibus is built on omnisense/contracts, the kernel of the omni families, with usage
   policies; the public API is unchanged. `Config`, `Registry`, `GatewayFactory` and
