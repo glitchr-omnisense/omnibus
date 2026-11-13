@@ -13,6 +13,7 @@ use Omnibus\GatewayFactory;
 use Omnibus\Http\NoRetry;
 use Omnibus\Http\Throttle;
 use Omnibus\Model\Label;
+use Omnibus\Offline\OfflineGatewayFactory;
 use Omnibus\Registry;
 use Omnibus\Request\Request;
 use Omnibus\Request\Shipping;
@@ -189,6 +190,10 @@ final class PolicyTest extends TestCase
 
     public function testTheBundleTakesPolicyUsageAndASharedLimiter(): void
     {
+        // omnibus/offline: the family's harness installs it, this package's own CI does not.
+        if (!class_exists(OfflineGatewayFactory::class)) {
+            self::markTestSkipped('omnibus/offline is not installed.');
+        }
         $container = new ContainerBuilder();
         $container->register('http_client', MockHttpClient::class);
         $container->register('app.limiter', InMemoryRateLimiter::class)->setPublic(true);

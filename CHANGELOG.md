@@ -2,12 +2,30 @@
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-11-13
+
+The first stable 2.x release: it installs with Composer's default minimum-stability (stable).
+
+### Release
+- Requires `omnisense/contracts` `^1.0`, a stable version, where it required `^1.0@dev`;
+  `extra.branch-alias` `dev-2.x` → `2.x-dev`.
+- CI: `.github/workflows/ci.yml` (glitchr-studio/ci's php-package.yml: the package installed alone,
+  PHPUnit, PHPStan against its baseline, a consumer install) and `release.yml` (that CI on the tag,
+  then glitchr-studio/ci's php-release.yml); `phpunit.xml.dist` runs the package's own tests.
+- The fallback kept in `Http\NoRetry` for an omnisense/contracts older than 1568f2c is gone:
+  contracts 1.0 has the kernel's `NoRetry`.
+- The package's own CI installs it alone, without any carrier: the two tests that build carriers
+  through the bundle (`Tests/Bridge/OmnibusBundleTest`,
+  `PolicyTest::testTheBundleTakesPolicyUsageAndASharedLimiter`) are skipped when omnibus/offline
+  (and omnibus/mondial-relay) are not installed, as `BareTest` already was; the family's harness,
+  every carrier installed, runs them. `phpstan.neon` accepts the bundle's carrier classes as absent
+  (alone) or known (in the harness).
+
 ### Changed
-- `Http\NoRetry::of()` is omnisense/contracts' `Http\NoRetry::of()` when the kernel has it (from
-  contracts 1568f2c, which brings the shared protection: a `MockHttpClient` under Symfony's
-  decorators is no longer copied); with an older kernel in a site's vendor, omnibus' former code
-  runs, as before. Same name, same signature. `Tests/PolicyTest`: a label answered 503 then 200
-  through Traceable over Retryable sent once, a `MockHttpClient` still counting its requests.
+- `Http\NoRetry::of()` is omnisense/contracts' `Http\NoRetry::of()` (the shared protection: a
+  `MockHttpClient` under Symfony's decorators is no longer copied). Same name, same signature.
+  `Tests/PolicyTest`: a label answered 503 then 200 through Traceable over Retryable sent once, a
+  `MockHttpClient` still counting its requests.
 
 ### Added
 - omnisense/omnibus is built on omnisense/contracts, the kernel of the omni families, with usage

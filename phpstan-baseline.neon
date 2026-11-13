@@ -43,12 +43,6 @@ parameters:
 			path: Action/ConfiguredRatingAction.php
 
 		-
-			message: '#^Call to function is_subclass_of\(\) with ''Omnibus\\\\Amazon\\\\AmazonGatewayFactory''\|''Omnibus\\\\Aramex\\\\AramexGatewayFactory''\|''Omnibus\\\\Auspost\\\\AuspostGatewayFactory''\|''Omnibus\\\\Bluedart\\\\BluedartGatewayFactory''\|''Omnibus\\\\CanadaPost\\\\CanadaPostGatewayFactory''\|''Omnibus\\\\Canpar\\\\CanparGatewayFactory''\|''Omnibus\\\\Chronopost\\\\ChronopostGatewayFactory''\|''Omnibus\\\\Colissimo\\\\ColissimoGatewayFactory''\|''Omnibus\\\\DbSchenker\\\\DbSchenkerGatewayFactory''\|''Omnibus\\\\Dhl\\\\DhlGatewayFactory''\|''Omnibus\\\\Dtdc\\\\DtdcGatewayFactory''\|''Omnibus\\\\Fedex\\\\FedexGatewayFactory''\|''Omnibus\\\\Gls\\\\GlsGatewayFactory''\|''Omnibus\\\\JdlExpress\\\\JdlExpressGatewayFactory''\|''Omnibus\\\\MondialRelay\\\\MondialRelayGatewayFactory''\|''Omnibus\\\\Offline\\\\OfflineGatewayFactory''\|''Omnibus\\\\Purolator\\\\PurolatorGatewayFactory''\|''Omnibus\\\\RoyalMail\\\\RoyalMailGatewayFactory''\|''Omnibus\\\\SfExpress\\\\SfExpressGatewayFactory''\|''Omnibus\\\\Tnt\\\\TntGatewayFactory''\|''Omnibus\\\\Ups\\\\UpsGatewayFactory''\|''Omnibus\\\\Usps\\\\UspsGatewayFactory''\|''Omnibus\\\\ZtoExpress\\\\ZtoExpressGatewayFactory'' and ''Omnibus\\\\GatewayFactoryInterface'' will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: Bridge/Symfony/OmnibusBundle.php
-
-		-
 			message: '#^Method Omnibus\\Gateway\:\:ship\(\) should return Omnibus\\Model\\Label but returns Omnibus\\Model\\Label\|null\.$#'
 			identifier: return.type
 			count: 1

@@ -11,3 +11,15 @@ parameters:
     excludePaths:
         - vendor (?)
         - docker (?)
+    # The bundle names every carrier's factory (Bridge/Symfony/OmnibusBundle::FACTORIES) and registers
+    # those installed. Installed alone (this package's CI), they are unknown classes; with every
+    # carrier (the family's harness), PHPStan knows each is a GatewayFactoryInterface. Both hold.
+    ignoreErrors:
+        -
+            identifier: class.notFound
+            path: Bridge/Symfony/OmnibusBundle.php
+            reportUnmatched: false
+        -
+            identifier: function.alreadyNarrowedType
+            path: Bridge/Symfony/OmnibusBundle.php
+            reportUnmatched: false

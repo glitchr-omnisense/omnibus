@@ -4,6 +4,8 @@ namespace Omnibus\Tests\Bridge;
 
 use Omnibus\Bridge\Symfony\OmnibusBundle;
 use Omnibus\GatewayInterface;
+use Omnibus\MondialRelay\MondialRelayGatewayFactory;
+use Omnibus\Offline\OfflineGatewayFactory;
 use Omnibus\Registry;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -13,6 +15,10 @@ final class OmnibusBundleTest extends TestCase
 {
     public function testTheGatewaysConfiguredAreBuiltAndInjectableByName(): void
     {
+        // The carriers' packages: the family's harness installs them, this package's own CI does not.
+        if (!class_exists(OfflineGatewayFactory::class) || !class_exists(MondialRelayGatewayFactory::class)) {
+            self::markTestSkipped('omnibus/offline and omnibus/mondial-relay are not installed.');
+        }
         $container = new ContainerBuilder();
         $container->register('http_client', MockHttpClient::class);
         $container->register(Shop::class)->setAutowired(true)->setPublic(true);
